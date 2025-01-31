@@ -1,10 +1,16 @@
-import "./App.css";
+import { BrowserRouter as Router } from "react-router-dom";
+import "./app.css";
+import Footer from "./components/layout/footer";
+import Header from "./components/layout/header";
 
 function App() {
   return (
-    <>
-      <div className="bg-yellow-400">norman</div>
-    </>
+    <Router>
+      <div className="flex flex-col min-h-screen">
+        <Header />
+        <Footer />
+      </div>
+    </Router>
   );
 }
 
