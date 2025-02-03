@@ -57,11 +57,14 @@ export default function Sidebar() {
                   ? "bg-primary-foreground text-primary"
                   : "hover:bg-primary-foreground/10",
                 "px-3 py-2 rounded-md text-sm font-medium transition-colors flex items-center",
-                isCollapsed ? "justify-center" : ""
+                isCollapsed ? "justify-center w-full" : ""
               )}
+              title={isCollapsed ? item.name : ""}
             >
-              <item.icon className="h-5 w-5 mr-2" />
-              {!isCollapsed && item.name}
+              <div className="flex items-center h-10 w-30">
+                <item.icon className="h-5 w-5" />
+                {!isCollapsed && <span className="ml-2">{item.name}</span>}
+              </div>
             </Link>
           );
         })}
