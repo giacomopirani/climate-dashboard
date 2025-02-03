@@ -2,11 +2,14 @@ import { cn } from "@/lib/utils";
 import {
   Atom,
   BarChart2,
+  ChevronLeft,
+  ChevronRight,
   CloudRain,
   Snowflake,
   Thermometer,
   Wind,
 } from "lucide-react";
+import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 
 const navigation = [
@@ -18,45 +21,51 @@ const navigation = [
 ];
 
 export default function Sidebar() {
+  const [isCollapsed, setIsCollapsed] = useState(true);
   const location = useLocation();
 
   return (
-    <div className="hidden lg:fixed lg:inset-y-0 lg:flex lg:w-64 lg:flex-col">
-      <div className="flex flex-col flex-grow border-r bg-background">
-        <div className="flex h-16 items-center px-4 border-b">
+    <div
+      className={cn(
+        "bg-primary text-primary-foreground h-screen flex flex-col transition-width duration-300",
+        isCollapsed ? "w-16" : "w-64"
+      )}
+    >
+      <div className="flex items-center justify-between h-16 px-4">
+        {!isCollapsed && (
           <Link to="/" className="flex items-center space-x-2">
-            <BarChart2 className="h-6 w-6 text-primary" />
+            <BarChart2 className="h-6 w-6" />
             <span className="text-lg font-semibold">Climate Data</span>
           </Link>
-        </div>
-        <nav className="flex-1 space-y-1 px-2 py-4">
-          {navigation.map((item) => {
-            const isActive = location.pathname === item.href;
-            return (
-              <Link
-                key={item.name}
-                to={item.href}
-                className={cn(
-                  isActive
-                    ? "bg-primary/10 text-primary"
-                    : "text-muted-foreground hover:bg-primary/5",
-                  "group flex items-center px-3 py-2 text-sm font-medium rounded-md transition-colors"
-                )}
-              >
-                <item.icon
-                  className={cn(
-                    isActive
-                      ? "text-primary"
-                      : "text-muted-foreground group-hover:text-primary",
-                    "mr-3 h-5 w-5 flex-shrink-0 transition-colors"
-                  )}
-                />
-                {item.name}
-              </Link>
-            );
-          })}
-        </nav>
+        )}
+        <button
+          onClick={() => setIsCollapsed(!isCollapsed)}
+          className="ml-auto"
+        >
+          {isCollapsed ? <ChevronRight /> : <ChevronLeft />}
+        </button>
       </div>
+      <nav className="flex-grow flex flex-col space-y-2 px-4">
+        {navigation.map((item) => {
+          const isActive = location.pathname === item.href;
+          return (
+            <Link
+              key={item.name}
+              to={item.href}
+              className={cn(
+                isActive
+                  ? "bg-primary-foreground text-primary"
+                  : "hover:bg-primary-foreground/10",
+                "px-3 py-2 rounded-md text-sm font-medium transition-colors flex items-center",
+                isCollapsed ? "justify-center" : ""
+              )}
+            >
+              <item.icon className="h-5 w-5 mr-2" />
+              {!isCollapsed && item.name}
+            </Link>
+          );
+        })}
+      </nav>
     </div>
   );
 }

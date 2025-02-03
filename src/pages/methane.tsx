@@ -16,6 +16,7 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
+import LoadingSpinner from "../util/loading-spinner";
 
 interface MethaneData {
   date: string;
@@ -53,7 +54,7 @@ const Methane = () => {
   if (isLoading)
     return (
       <div className="flex justify-center items-center h-screen">
-        Loading...
+        <LoadingSpinner />
       </div>
     );
   if (error) return <div className="text-red-500 text-center">{error}</div>;

@@ -6,6 +6,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { api } from "@/lib/api";
+import LoadingSpinner from "@/util/loading-spinner";
 import { useEffect, useState } from "react";
 import {
   CartesianGrid,
@@ -53,7 +54,7 @@ const Temperature = () => {
   if (isLoading)
     return (
       <div className="flex justify-center items-center h-screen">
-        Loading...
+        <LoadingSpinner />
       </div>
     );
   if (error) return <div className="text-red-500 text-center">{error}</div>;

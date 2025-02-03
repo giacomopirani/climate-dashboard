@@ -1,43 +1,68 @@
+import { Atom, CloudRain, Snowflake, Thermometer, Wind } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "../components/ui/button";
 import {
   Card,
   CardContent,
-  CardDescription,
+  CardFooter,
   CardHeader,
   CardTitle,
 } from "../components/ui/card";
 
-const charts = [
+const features = [
   {
-    title: "Temperature",
-    description: "Global temperature trends",
-    path: "/temperature",
+    name: "Global Temperature",
+    description: "Track global temperature trends and anomalies over time.",
+    href: "/temperature",
+    icon: Thermometer,
   },
-  { title: "CO2", description: "Carbon dioxide levels", path: "/co2" },
-  { title: "Methane", description: "Methane concentration", path: "/methane" },
-  { title: "NO2", description: "Nitrous oxide levels", path: "/no2" },
-  { title: "Polar Ice", description: "Arctic ice extent", path: "/polar-ice" },
+  {
+    name: "CO2 Levels",
+    description: "Monitor atmospheric carbon dioxide concentration.",
+    href: "/co2",
+    icon: Wind,
+  },
+  {
+    name: "Methane Concentration",
+    description: "Analyze atmospheric methane levels and their impact.",
+    href: "/methane",
+    icon: CloudRain,
+  },
+  {
+    name: "NO2 Measurements",
+    description: "Study nitrous oxide concentrations in the atmosphere.",
+    href: "/no2",
+    icon: Atom,
+  },
+  {
+    name: "Polar Ice Extent",
+    description: "Track changes in Arctic and Antarctic ice coverage.",
+    href: "/polar-ice",
+    icon: Snowflake,
+  },
 ];
 
-const Home = () => {
+export default function Home() {
   return (
-    <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-      {charts.map((chart) => (
-        <Card key={chart.title}>
+    <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 mx-auto">
+      {features.map((feature) => (
+        <Card key={feature.name} className="flex flex-col border shadow-lg">
           <CardHeader>
-            <CardTitle>{chart.title}</CardTitle>
-            <CardDescription>{chart.description}</CardDescription>
+            <feature.icon className="h-8 w-8 text-primary mb-2" />
+            <CardTitle>{feature.name}</CardTitle>
           </CardHeader>
           <CardContent>
-            <Button asChild>
-              <Link to={chart.path}>View Chart</Link>
-            </Button>
+            <p className="text-sm text-muted-foreground">
+              {feature.description}
+            </p>
           </CardContent>
+          <CardFooter className="mt-auto">
+            <Button asChild className="w-full">
+              <Link to={feature.href}>View Chart</Link>
+            </Button>
+          </CardFooter>
         </Card>
       ))}
     </div>
   );
-};
-
-export default Home;
+}
