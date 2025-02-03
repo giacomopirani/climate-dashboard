@@ -1,16 +1,29 @@
-import { BrowserRouter as Router } from "react-router-dom";
-import "./app.css";
-import Footer from "./components/layout/footer";
-import Header from "./components/layout/header";
+import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
+import Layout from "../src/components/layout/layout";
+import { ThemeProvider } from "../src/components/ui/theme-provider";
+import CO2 from "../src/pages/co2";
+import Home from "../src/pages/home";
+import Methane from "../src/pages/methane";
+import NO2 from "../src/pages/no2";
+import PolarIce from "../src/pages/polar-ice";
+import Temperature from "../src/pages/temperature";
 
 function App() {
   return (
-    <Router>
-      <div className="flex flex-col min-h-screen">
-        <Header />
-        <Footer />
-      </div>
-    </Router>
+    <ThemeProvider defaultTheme="system" storageKey="vite-ui-theme">
+      <Router>
+        <Layout>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/temperature" element={<Temperature />} />
+            <Route path="/co2" element={<CO2 />} />
+            <Route path="/methane" element={<Methane />} />
+            <Route path="/no2" element={<NO2 />} />
+            <Route path="/polar-ice" element={<PolarIce />} />
+          </Routes>
+        </Layout>
+      </Router>
+    </ThemeProvider>
   );
 }
 

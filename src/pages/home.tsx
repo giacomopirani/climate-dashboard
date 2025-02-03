@@ -1,12 +1,12 @@
 import { Link } from "react-router-dom";
-import { Button } from "../ui/button";
+import { Button } from "../components/ui/button";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "../ui/card";
+} from "../components/ui/card";
 
 const charts = [
   {
