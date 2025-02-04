@@ -86,6 +86,23 @@ const Methane = () => {
                 stroke="#82ca9d"
                 name="Trend"
               />
+              <Line
+                type="monotone"
+                dataKey="averageUnc"
+                stroke="#ff7300"
+                name="Average Uncertainty"
+                dot={false}
+                strokeDasharray="5 5"
+              />
+
+              <Line
+                type="monotone"
+                dataKey="trendUnc"
+                stroke="#ff0000"
+                name="Trend Uncertainty"
+                dot={false}
+                strokeDasharray="5 5"
+              />
             </LineChart>
           </ResponsiveContainer>
         </CardContent>

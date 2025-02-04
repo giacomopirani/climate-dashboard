@@ -6,7 +6,9 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { api } from "@/lib/api";
+import formatData from "@/util/format-data";
 import LoadingSpinner from "@/util/loading-spinner";
+import { NO2Data } from "@/util/types/no2-types";
 import { useEffect, useState } from "react";
 import {
   CartesianGrid,
@@ -17,12 +19,6 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
-
-interface NO2Data {
-  date: string;
-  average: number;
-  trend: number;
-}
 
 const NO2 = () => {
   const [data, setData] = useState<NO2Data[]>([]);
@@ -38,6 +34,8 @@ const NO2 = () => {
           date: item.date,
           average: parseFloat(item.average),
           trend: parseFloat(item.trend),
+          averageUnc: parseFloat(item.averageUnc),
+          trendUnc: parseFloat(item.trendUnc),
         }));
         setData(formattedData);
       } catch (err) {
@@ -73,7 +71,7 @@ const NO2 = () => {
           <ResponsiveContainer width="100%" height={400}>
             <LineChart data={data}>
               <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="date" />
+              <XAxis dataKey="date" tickFormatter={formatData} />
               <YAxis />
               <Tooltip />
               <Line
@@ -87,6 +85,23 @@ const NO2 = () => {
                 dataKey="trend"
                 stroke="#82ca9d"
                 name="Trend"
+              />
+              <Line
+                type="monotone"
+                dataKey="averageUnc"
+                stroke="#ff7300"
+                name="Average Uncertainty"
+                dot={false}
+                strokeDasharray="5 5"
+              />
+
+              <Line
+                type="monotone"
+                dataKey="trendUnc"
+                stroke="#ff0000"
+                name="Trend Uncertainty"
+                dot={false}
+                strokeDasharray="5 5"
               />
             </LineChart>
           </ResponsiveContainer>
