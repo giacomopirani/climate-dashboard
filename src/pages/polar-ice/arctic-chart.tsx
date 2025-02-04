@@ -1,4 +1,3 @@
-// ArcticChart.tsx
 import React from "react";
 import {
   Brush,
@@ -13,7 +12,7 @@ import {
   YAxis,
 } from "recharts";
 import CustomBrushTick from "./custom-brushtick";
-import CustomTooltip from "./custom-tooltip";
+import CustomTooltip from "./custom-tooltip-polar-ice";
 
 export interface ArcticChartData {
   month: string;
@@ -59,10 +58,6 @@ const ArcticChart: React.FC<ArcticChartProps> = ({ data, annualMean }) => {
           stroke="red"
           strokeDasharray="3 3"
         />
-        {/*
-          Forziamo il cast a "any" per passare la proprietà "tick" personalizzata,
-          anche se il tipo Brush non la prevede.
-        */}
         <Brush
           dataKey="month"
           height={30}

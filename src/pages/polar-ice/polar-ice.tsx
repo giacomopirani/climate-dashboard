@@ -1,4 +1,3 @@
-// PolarIce.tsx
 import {
   Card,
   CardContent,

@@ -14,7 +14,7 @@ export default function Layout({ children }: LayoutProps) {
           <div className="max-w-4xl mx-auto">{children}</div>
         </main>
       </div>
-      <footer className="py-4 text-center text-sm text-muted-foreground border-t">
+      <footer className="py-5 text-center text-sm text-muted-foreground bg-[#0F172A]">
         <div className="max-w-full mx-auto">
           © 2025 Climate Dashboard. All rights reserved.
         </div>

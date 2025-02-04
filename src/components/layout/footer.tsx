@@ -1,6 +1,6 @@
 const Footer = () => {
   return (
-    <footer className="bg-gray-200 p-4 text-center">
+    <footer className="text-foreground text-center">
       <p>&copy; 2025 Climate Dashboard. All rights reserved.</p>
     </footer>
   );

@@ -6,7 +6,7 @@ import Home from "../src/pages/home";
 import Methane from "../src/pages/methane";
 import NO2 from "../src/pages/no2";
 import PolarIce from "../src/pages/polar-ice/polar-ice";
-import Temperature from "../src/pages/temperature";
+import Temperature from "../src/pages/temperature/temperature";
 
 function App() {
   return (
