@@ -1,10 +1,10 @@
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import Layout from "../src/components/layout/layout";
 import { ThemeProvider } from "../src/components/ui/theme-provider";
-import CO2 from "../src/pages/co2";
+import CO2 from "../src/pages/co2/co2";
 import Home from "../src/pages/home";
-import Methane from "../src/pages/methane";
-import NO2 from "../src/pages/no2";
+import Methane from "../src/pages/methane/methane";
+import NO2 from "../src/pages/no2/no2";
 import PolarIce from "../src/pages/polar-ice/polar-ice";
 import Temperature from "../src/pages/temperature/temperature";
 

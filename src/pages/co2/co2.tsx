@@ -6,6 +6,8 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { api } from "@/lib/api";
+import LoadingSpinner from "@/util/loading-spinner";
+import { CO2Data } from "@/util/types/co2-types";
 import { useEffect, useState } from "react";
 import {
   CartesianGrid,
@@ -16,16 +18,9 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
-import LoadingSpinner from "../util/loading-spinner";
 
-interface MethaneData {
-  date: string;
-  average: number;
-  trend: number;
-}
-
-const Methane = () => {
-  const [data, setData] = useState<MethaneData[]>([]);
+const CO2 = () => {
+  const [data, setData] = useState<CO2Data[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -33,15 +28,19 @@ const Methane = () => {
     const loadData = async () => {
       try {
         setIsLoading(true);
-        const result = await api.getMethane();
-        const formattedData = result.methane.map((item: any) => ({
-          date: item.date,
-          average: parseFloat(item.average),
+        const result = await api.getCO2();
+        const formattedData = result.co2.map((item: any) => ({
+          ...item,
           trend: parseFloat(item.trend),
+          cycle: parseFloat(item.cycle),
+          date: `${item.year}-${item.month.padStart(
+            2,
+            "0"
+          )}-${item.day.padStart(2, "0")}`, // Formatta la data
         }));
         setData(formattedData);
       } catch (err) {
-        setError("Failed to load methane data");
+        setError("Failed to load CO2 data");
         console.error(err);
       } finally {
         setIsLoading(false);
@@ -61,12 +60,12 @@ const Methane = () => {
 
   return (
     <div className="space-y-6">
-      <h1 className="text-3xl font-bold">Methane Levels</h1>
+      <h1 className="text-3xl font-bold">CO2 Levels</h1>
       <Card>
         <CardHeader>
-          <CardTitle>Methane Concentration</CardTitle>
+          <CardTitle>CO2 Concentration</CardTitle>
           <CardDescription>
-            Atmospheric methane concentration over time
+            Atmospheric CO2 concentration over time
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -78,15 +77,15 @@ const Methane = () => {
               <Tooltip />
               <Line
                 type="monotone"
-                dataKey="average"
+                dataKey="trend"
                 stroke="#8884d8"
-                name="Average"
+                name="Trend"
               />
               <Line
                 type="monotone"
-                dataKey="trend"
+                dataKey="cycle"
                 stroke="#82ca9d"
-                name="Trend"
+                name="Cycle"
               />
             </LineChart>
           </ResponsiveContainer>
@@ -96,4 +95,4 @@ const Methane = () => {
   );
 };
 
-export default Methane;
+export default CO2;
