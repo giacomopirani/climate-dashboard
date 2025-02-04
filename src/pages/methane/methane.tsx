@@ -6,6 +6,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { api } from "@/lib/api";
+import { MethaneData } from "@/util/types/methane-types";
 import { useEffect, useState } from "react";
 import {
   CartesianGrid,
@@ -16,13 +17,8 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
+import formatData from "../../util/format-data";
 import LoadingSpinner from "../../util/loading-spinner";
-
-interface MethaneData {
-  date: string;
-  average: number;
-  trend: number;
-}
 
 const Methane = () => {
   const [data, setData] = useState<MethaneData[]>([]);
@@ -38,6 +34,8 @@ const Methane = () => {
           date: item.date,
           average: parseFloat(item.average),
           trend: parseFloat(item.trend),
+          averageUnc: parseFloat(item.averageUnc),
+          trendUnc: parseFloat(item.trendUnc),
         }));
         setData(formattedData);
       } catch (err) {
@@ -73,7 +71,7 @@ const Methane = () => {
           <ResponsiveContainer width="100%" height={400}>
             <LineChart data={data}>
               <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="date" />
+              <XAxis dataKey="date" tickFormatter={formatData} />
               <YAxis />
               <Tooltip />
               <Line

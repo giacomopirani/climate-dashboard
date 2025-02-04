@@ -9,7 +9,7 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
-import formatTime from "../../util/format-time";
+import formatData from "../../util/format-data";
 import { TemperatureData } from "../../util/types/temperature-types";
 import TemperatureTooltip from "./custom-tooltip-temperature";
 
@@ -27,7 +27,7 @@ const TemperatureChart: React.FC<TemperatureChartProps> = ({ data }) => {
         <CartesianGrid strokeDasharray="3 3" />
         <XAxis
           dataKey="time"
-          tickFormatter={formatTime}
+          tickFormatter={formatData}
           tick={{ fontSize: 12 }}
         />
         <YAxis tick={{ fontSize: 12 }} />
