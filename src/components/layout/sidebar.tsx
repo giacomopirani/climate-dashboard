@@ -20,7 +20,11 @@ const navigation = [
   { name: "Polar Ice", href: "/polar-ice", icon: Snowflake },
 ];
 
-export default function Sidebar() {
+interface SidebarProps {
+  className?: string;
+}
+
+export default function Sidebar({ className }: SidebarProps) {
   const [isCollapsed, setIsCollapsed] = useState(true);
   const location = useLocation();
 
@@ -28,7 +32,8 @@ export default function Sidebar() {
     <div
       className={cn(
         "bg-primary text-primary-foreground h-screen top-0 left-0 flex flex-col transition-width duration-300",
-        isCollapsed ? "w-16" : "w-64"
+        isCollapsed ? "w-16" : "w-64",
+        className
       )}
     >
       <div className="flex items-center justify-between h-16 px-4">
@@ -45,7 +50,7 @@ export default function Sidebar() {
           {isCollapsed ? <ChevronRight /> : <ChevronLeft />}
         </button>
       </div>
-      <nav className="flex-grow flex flex-col space-y-2 px-4">
+      <nav className="flex-grow flex flex-col space-y-2 px-4 h-full">
         {navigation.map((item) => {
           const isActive = location.pathname === item.href;
           return (
