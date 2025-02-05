@@ -29,10 +29,9 @@ export default function Sidebar() {
       className={cn(
         "bg-primary text-primary-foreground fixed top-0 left-0 h-screen flex flex-col transition-width duration-300",
         isCollapsed ? "w-16" : "w-44",
-        "hidden lg:flex" // Nascondi sotto i 1200px, mostra da l
+        "hidden lg:flex"
       )}
     >
-      {/* Resto del codice della Sidebar rimane invariato */}
       <div className="flex items-center justify-between h-16 px-4">
         {!isCollapsed && (
           <Link to="/" className="ml-3 flex items-center space-x-2">
