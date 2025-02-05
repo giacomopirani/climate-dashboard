@@ -44,7 +44,7 @@ const features = [
 
 export default function Home() {
   return (
-    <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 mx-auto">
+    <div className="mt-8 grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 mx-auto">
       {features.map((feature) => (
         <Card key={feature.name} className="flex flex-col border shadow-lg">
           <CardHeader>

@@ -27,7 +27,7 @@ export default function Sidebar() {
   return (
     <div
       className={cn(
-        "bg-primary text-primary-foreground h-screen flex flex-col transition-width duration-300",
+        "bg-primary text-primary-foreground h-screen top-0 left-0 flex flex-col transition-width duration-300",
         isCollapsed ? "w-16" : "w-64"
       )}
     >
