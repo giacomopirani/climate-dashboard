@@ -44,25 +44,27 @@ const features = [
 
 export default function Home() {
   return (
-    <div className="mt-8 grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 mx-auto">
-      {features.map((feature) => (
-        <Card key={feature.name} className="flex flex-col border shadow-lg">
-          <CardHeader>
-            <feature.icon className="h-8 w-8 text-primary mb-2" />
-            <CardTitle>{feature.name}</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <p className="text-sm text-muted-foreground">
-              {feature.description}
-            </p>
-          </CardContent>
-          <CardFooter className="mt-auto">
-            <Button asChild className="w-full">
-              <Link to={feature.href}>View Chart</Link>
-            </Button>
-          </CardFooter>
-        </Card>
-      ))}
+    <div className="flex justify-center">
+      <div className="mt-8 grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 max-w-[1200px] w-full px-4">
+        {features.map((feature) => (
+          <Card key={feature.name} className="flex flex-col border shadow-lg">
+            <CardHeader>
+              <feature.icon className="h-8 w-8 text-primary mb-2" />
+              <CardTitle>{feature.name}</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-sm text-muted-foreground">
+                {feature.description}
+              </p>
+            </CardContent>
+            <CardFooter className="mt-auto">
+              <Button asChild className="w-full">
+                <Link to={feature.href}>View Chart</Link>
+              </Button>
+            </CardFooter>
+          </Card>
+        ))}
+      </div>
     </div>
   );
 }
