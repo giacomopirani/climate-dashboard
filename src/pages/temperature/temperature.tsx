@@ -51,7 +51,7 @@ const Temperature: React.FC = () => {
     return <div className="text-red-500 text-center mt-4">{error}</div>;
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 mt-6">
       <h1 className="text-3xl font-bold">Global Temperature Trends</h1>
       <Card>
         <CardHeader>

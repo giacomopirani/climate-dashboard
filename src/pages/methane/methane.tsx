@@ -58,7 +58,7 @@ const Methane = () => {
   if (error) return <div className="text-red-500 text-center">{error}</div>;
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 mt-6">
       <h1 className="text-3xl font-bold">Methane Levels</h1>
       <Card>
         <CardHeader>

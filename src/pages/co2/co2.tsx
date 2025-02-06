@@ -59,7 +59,7 @@ const CO2 = () => {
   if (error) return <div className="text-red-500 text-center">{error}</div>;
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 mt-6">
       <h1 className="text-3xl font-bold">CO2 Levels</h1>
       <Card>
         <CardHeader>
