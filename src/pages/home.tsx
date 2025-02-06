@@ -1,6 +1,6 @@
 import { Atom, CloudRain, Snowflake, Thermometer, Wind } from "lucide-react";
 import { Link } from "react-router-dom";
-import logoClimate from "../../public/logo.png";
+import logoClimate from "../assets/logo.png";
 import { Button } from "../components/ui/button";
 import {
   Card,
