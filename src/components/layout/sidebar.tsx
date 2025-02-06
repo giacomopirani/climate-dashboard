@@ -32,7 +32,7 @@ export default function Sidebar() {
         "hidden lg:flex"
       )}
     >
-      <div className="flex items-center justify-between h-16 px-4">
+      <div className="flex items-center justify-between h-16 px-4 mt-14">
         {!isCollapsed && (
           <Link to="/" className="ml-3 flex items-center space-x-2">
             <BarChart2 className="h-6 w-6" />

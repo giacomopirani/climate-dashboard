@@ -15,10 +15,10 @@ export default function Layout({ children }: LayoutProps) {
         <Sidebar />
       </div>
       <div className="flex flex-col flex-grow w-full lg:pl-[60px]">
-        <header className="flex justify-end items-center p-4">
+        <header className="bg-secondary-foreground fixed top-0 left-0 right-0 flex justify-end items-center p-4 z-10">
           <ThemeToggle />
         </header>
-        <main className="flex-grow p-4 lg:p-8 pb-24 lg:pb-8">
+        <main className="flex-grow p-4 lg:p-8 pb-24 lg:pb-8 mt-16">
           <div className="max-w-4xl mx-auto">{children}</div>
         </main>
         <div className="py-5 w-full text-center text-sm text-muted-foreground mb-16 lg:mb-0">
