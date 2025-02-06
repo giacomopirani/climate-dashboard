@@ -1,6 +1,5 @@
 import { Atom, CloudRain, Snowflake, Thermometer, Wind } from "lucide-react";
 import { Link } from "react-router-dom";
-import logoClimate from "../assets/logo.png";
 import { Button } from "../components/ui/button";
 import {
   Card,
@@ -45,15 +44,7 @@ const features = [
 
 export default function Home() {
   return (
-    <div className="flex flex-col items-center">
-      <div className="px-4">
-        <img
-          src={logoClimate}
-          alt="Climate Change Visualization"
-          className="h-20 w-20 object-cover rounded-full mb-8"
-        />
-      </div>
-
+    <div className="flex flex-col items-center mt-3">
       <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 max-w-[1200px] w-full px-4">
         {features.map((feature) => (
           <Card key={feature.name} className="flex flex-col border shadow-lg">
