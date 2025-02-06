@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 import Sidebar from "../layout/sidebar";
+import ThemeToggle from "../ui/theme-toggle";
 import Footer from "./footer";
 import { MobileNavigation } from "./mobile-navigation";
 
@@ -14,6 +15,9 @@ export default function Layout({ children }: LayoutProps) {
         <Sidebar />
       </div>
       <div className="flex flex-col flex-grow w-full lg:pl-[60px]">
+        <header className="flex justify-end items-center p-4">
+          <ThemeToggle />
+        </header>
         <main className="flex-grow p-4 lg:p-8 pb-24 lg:pb-8">
           <div className="max-w-4xl mx-auto">{children}</div>
         </main>

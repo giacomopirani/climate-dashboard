@@ -68,6 +68,10 @@
   }
 }
 
+html {
+  transition: background-color 0.5s, color 0.5s;
+}
+
 @layer base {
   body {
     @apply bg-background text-foreground;
@@ -81,4 +85,14 @@
   .card {
     @apply bg-card text-card-foreground shadow-sm hover:shadow-md transition-shadow duration-200;
   }
+}
+
+body.dark {
+  background-color: #1a1a1a; /* Colore di sfondo scuro */
+  color: #ffffff; /* Colore del testo chiaro */
+}
+
+body.light {
+  background-color: #ffffff; /* Colore di sfondo chiaro */
+  color: #000000; /* Colore del testo scuro */
 }
