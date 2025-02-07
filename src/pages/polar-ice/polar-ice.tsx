@@ -7,24 +7,21 @@ import {
 } from "@/components/ui/card";
 import { api } from "@/lib/api";
 import LoadingSpinner from "@/util/loading-spinner";
-import React, { useCallback, useEffect, useState } from "react";
 import {
   ArcticDataDescription,
   ArcticDataResponse,
   ArcticMonthlyData,
-} from "../../util/types/arctic-data-types";
+} from "@/util/types/arctic-data-types";
+import React, { useCallback, useEffect, useState } from "react";
+import { formatPolarIceDate } from "../../util/format-date";
 import ArcticChart, { ArcticChartData } from "./arctic-chart";
 import ArcticMetaData from "./arctic-metadata";
-
-const formatDateKey = (key: string): string => {
-  return `${key.slice(0, 4)}-${key.slice(4)}`;
-};
 
 const formatArcticData = (rawData: {
   [date: string]: ArcticMonthlyData;
 }): ArcticChartData[] => {
   return Object.entries(rawData).map(([key, data]) => ({
-    month: formatDateKey(key),
+    month: formatPolarIceDate(key), // Usa la funzione per formattare la data
     value: data.value,
     anomaly: data.anom,
   }));
@@ -46,7 +43,7 @@ const PolarIce: React.FC = () => {
       }
       const { description, data } = result.arcticData;
       setMetaData(description);
-      setChartData(formatArcticData(data));
+      setChartData(formatArcticData(data)); // Applica la formattazione
     } catch (err) {
       setError("Failed to load polar ice data");
       console.error(err);

@@ -1,4 +1,3 @@
-// ArcticMetaData.tsx
 import React from "react";
 import { ArcticDataDescription } from "../../util/types/arctic-data-types";
 

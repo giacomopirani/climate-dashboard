@@ -11,6 +11,7 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
+import { formatPolarIceDate } from "../../util/format-date";
 import CustomBrushTick from "./custom-brushtick";
 import CustomTooltip from "./custom-tooltip-polar-ice";
 
@@ -26,10 +27,15 @@ interface ArcticChartProps {
 }
 
 const ArcticChart: React.FC<ArcticChartProps> = ({ data, annualMean }) => {
+  const formattedData = data.map((item) => ({
+    ...item,
+    month: formatPolarIceDate(item.month),
+  }));
+
   return (
     <ResponsiveContainer width="100%" height={400}>
       <LineChart
-        data={data}
+        data={formattedData}
         margin={{ top: 20, right: 20, left: 0, bottom: 40 }}
       >
         <CartesianGrid strokeDasharray="3 3" />
