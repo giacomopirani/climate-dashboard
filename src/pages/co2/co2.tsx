@@ -6,6 +6,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { api } from "@/lib/api";
+import { formatCO2Date } from "@/util/format-date";
 import LoadingSpinner from "@/util/loading-spinner";
 import { CO2Data } from "@/util/types/co2-types";
 import { useEffect, useState } from "react";
@@ -33,10 +34,7 @@ const CO2 = () => {
           ...item,
           trend: parseFloat(item.trend),
           cycle: parseFloat(item.cycle),
-          date: `${item.year}-${item.month.padStart(
-            2,
-            "0"
-          )}-${item.day.padStart(2, "0")}`, // Formatta la data
+          date: formatCO2Date(item.year, item.month, item.day), // Usa la funzione qui
         }));
         setData(formattedData);
       } catch (err) {

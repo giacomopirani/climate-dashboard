@@ -24,5 +24,5 @@ export const formatCO2Date = (
   ];
 
   const monthIndex = parseInt(month, 10) - 1;
-  return `${day} | ${monthNames[monthIndex]} | ${year}`;
+  return `${day} ${monthNames[monthIndex]} ${year}  `;
 };
