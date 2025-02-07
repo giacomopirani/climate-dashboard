@@ -19,6 +19,7 @@ import {
   YAxis,
 } from "recharts";
 import { formatDate } from "../../util/format-date";
+import CustomTooltip from "../tooltip/custom-tooltip";
 
 const NO2 = () => {
   const [data, setData] = useState<NO2Data[]>([]);
@@ -81,7 +82,7 @@ const NO2 = () => {
               <CartesianGrid strokeDasharray="3 3" />
               <XAxis dataKey="date" />
               <YAxis />
-              <Tooltip />
+              <Tooltip content={CustomTooltip} />
               <Line
                 type="monotone"
                 dataKey="average"

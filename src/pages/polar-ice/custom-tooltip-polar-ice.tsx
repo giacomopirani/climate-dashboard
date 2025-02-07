@@ -14,7 +14,7 @@ const CustomTooltip: React.FC<CustomTooltipProps> = ({
   if (active && payload && payload.length) {
     return (
       <div className="bg-white border p-2 shadow">
-        <p className="font-bold">{label}</p>
+        <p className="font-bold text-orange-600">{label}</p>
         {payload.map((entry: any, index: number) => (
           <p key={`tooltip-${index}`} style={{ color: entry.color }}>
             {entry.name}: {entry.value}

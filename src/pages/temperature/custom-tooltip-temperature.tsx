@@ -11,13 +11,13 @@ const CustomTooltipTemperature = ({
     const labelValue = label ?? "";
     return (
       <div className="bg-white border p-2 shadow rounded">
-        <p className="font-bold text-sm">
+        <p className="font-bold text-orange-600">
           Year: {labelValue ? parseFloat(labelValue).toFixed(0) : "N/A"}
         </p>
-        <p className="text-xs">
+        <p className="text-xs text-black">
           Station: <strong>{payload[0]?.value}</strong>
         </p>
-        <p className="text-xs">
+        <p className="text-xs text-black">
           Land: <strong>{payload[1]?.value}</strong>
         </p>
       </div>

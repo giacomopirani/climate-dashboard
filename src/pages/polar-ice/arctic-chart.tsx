@@ -51,7 +51,7 @@ const ArcticChart: React.FC<ArcticChartProps> = ({ data, annualMean }) => {
             zIndex: 10,
           }}
         >
-          Select a range by dragging the Brush
+          ← Select a range by dragging the Brush →
         </div>
       )}
 
@@ -86,7 +86,6 @@ const ArcticChart: React.FC<ArcticChartProps> = ({ data, annualMean }) => {
             stroke="red"
             strokeDasharray="3 3"
           />
-
           <Brush
             dataKey="month"
             height={50}
