@@ -22,7 +22,7 @@ const CustomTooltip: React.FC<TooltipProps<number, string>> = ({
         style={{
           fontSize: "14px",
           fontWeight: "bold",
-          color: "#ff8400",
+          color: "black",
           marginBottom: "5px",
         }}
       >

@@ -19,6 +19,7 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
+import CustomTooltip from "../tooltip/custom-tooltip";
 
 const CO2 = () => {
   const [data, setData] = useState<CO2Data[]>([]);
@@ -72,7 +73,7 @@ const CO2 = () => {
               <CartesianGrid strokeDasharray="3 3" />
               <XAxis dataKey="date" />
               <YAxis />
-              <Tooltip />
+              <Tooltip content={CustomTooltip} />
               <Line
                 type="monotone"
                 dataKey="trend"

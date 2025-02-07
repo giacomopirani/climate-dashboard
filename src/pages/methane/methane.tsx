@@ -19,6 +19,7 @@ import {
   YAxis,
 } from "recharts";
 import LoadingSpinner from "../../util/loading-spinner";
+import CustomTooltip from "../tooltip/custom-tooltip";
 
 const Methane = () => {
   const [data, setData] = useState<MethaneData[]>([]);
@@ -73,7 +74,7 @@ const Methane = () => {
               <CartesianGrid strokeDasharray="3 3" />
               <XAxis dataKey="date" tickFormatter={formatDate} />
               <YAxis />
-              <Tooltip />
+              <Tooltip content={CustomTooltip} />
               <Line
                 type="monotone"
                 dataKey="average"
