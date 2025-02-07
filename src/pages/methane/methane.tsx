@@ -6,6 +6,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { api } from "@/lib/api";
+import { formatDate } from "@/util/format-date";
 import { MethaneData } from "@/util/types/methane-types";
 import { useEffect, useState } from "react";
 import {
@@ -17,7 +18,6 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
-import formatData from "../../util/format-data";
 import LoadingSpinner from "../../util/loading-spinner";
 
 const Methane = () => {
@@ -31,7 +31,7 @@ const Methane = () => {
         setIsLoading(true);
         const result = await api.getMethane();
         const formattedData = result.methane.map((item: any) => ({
-          date: item.date,
+          date: formatDate(item.date),
           average: parseFloat(item.average),
           trend: parseFloat(item.trend),
           averageUnc: parseFloat(item.averageUnc),
@@ -71,7 +71,7 @@ const Methane = () => {
           <ResponsiveContainer width="100%" height={400}>
             <LineChart data={data}>
               <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="date" tickFormatter={formatData} />
+              <XAxis dataKey="date" tickFormatter={formatDate} />
               <YAxis />
               <Tooltip />
               <Line

@@ -6,7 +6,6 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { api } from "@/lib/api";
-import formatData from "@/util/format-data";
 import LoadingSpinner from "@/util/loading-spinner";
 import { NO2Data } from "@/util/types/no2-types";
 import { useEffect, useState } from "react";
@@ -19,6 +18,7 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
+import { formatDate } from "../../util/format-date";
 
 const NO2 = () => {
   const [data, setData] = useState<NO2Data[]>([]);
@@ -30,8 +30,12 @@ const NO2 = () => {
       try {
         setIsLoading(true);
         const result = await api.getNO2();
+        if (!result?.nitrous) {
+          throw new Error("Data not available");
+        }
+
         const formattedData = result.nitrous.map((item: any) => ({
-          date: item.date,
+          date: formatDate(item.date),
           average: parseFloat(item.average),
           trend: parseFloat(item.trend),
           averageUnc: parseFloat(item.averageUnc),
@@ -39,7 +43,7 @@ const NO2 = () => {
         }));
         setData(formattedData);
       } catch (err) {
-        setError("Failed to load NO2 data");
+        setError("Error loading NO₂ data");
         console.error(err);
       } finally {
         setIsLoading(false);
@@ -55,14 +59,18 @@ const NO2 = () => {
         <LoadingSpinner />
       </div>
     );
-  if (error) return <div className="text-red-500 text-center">{error}</div>;
+
+  if (error)
+    return (
+      <div className="text-red-500 text-center font-semibold">{error}</div>
+    );
 
   return (
     <div className="space-y-6 mt-6">
-      <h1 className="text-3xl font-bold">Nitrous Oxide Levels</h1>
+      <h1 className="text-3xl font-bold text-center">NO₂ Levels</h1>
       <Card>
         <CardHeader>
-          <CardTitle>NO2 Concentration</CardTitle>
+          <CardTitle>NO₂ Concentration</CardTitle>
           <CardDescription>
             Atmospheric nitrous oxide concentration over time
           </CardDescription>
@@ -71,7 +79,7 @@ const NO2 = () => {
           <ResponsiveContainer width="100%" height={400}>
             <LineChart data={data}>
               <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="date" tickFormatter={formatData} />
+              <XAxis dataKey="date" />
               <YAxis />
               <Tooltip />
               <Line
@@ -94,7 +102,6 @@ const NO2 = () => {
                 dot={false}
                 strokeDasharray="5 5"
               />
-
               <Line
                 type="monotone"
                 dataKey="trendUnc"
