@@ -11,10 +11,11 @@ import LoadingSpinner from "@/util/loading-spinner";
 import { CO2Data } from "@/util/types/co2-types";
 import { useEffect, useState } from "react";
 import {
+  Bar,
+  BarChart,
+  Brush,
   CartesianGrid,
   Legend,
-  Line,
-  LineChart,
   ResponsiveContainer,
   Tooltip,
   XAxis,
@@ -70,43 +71,44 @@ const CO2 = () => {
         </CardHeader>
         <CardContent>
           <ResponsiveContainer width="100%" height={400}>
-            <LineChart data={data}>
+            <BarChart data={data}>
               <CartesianGrid strokeDasharray="3 3" strokeOpacity={0.5} />
               <XAxis
                 dataKey="date"
                 tickFormatter={(date) =>
-                  new Date(date).toLocaleDateString("en-GB", {
-                    year: "numeric",
-                    month: "short",
-                  })
+                  new Date(date).getFullYear().toString()
                 }
+                interval={30} // Migliora la leggibilità sull'asse X
               />
               <YAxis tickFormatter={(tick) => tick.toLocaleString()} />
               <Tooltip content={CustomTooltip} />
               <Legend verticalAlign="top" height={36} />
 
-              <Line
-                type="monotone"
+              <Bar
                 dataKey="trend"
-                stroke="#8884d8"
-                strokeWidth={3}
+                fill="#8884d8"
                 name="Trend"
-                activeDot={{ r: 6 }}
-                dot={{ r: 3 }}
-                animationDuration={1000}
+                animationDuration={800}
+                barSize={20} // Aumenta la larghezza delle barre
               />
 
-              <Line
-                type="monotone"
+              <Bar
                 dataKey="cycle"
-                stroke="#82ca9d"
-                strokeWidth={3}
+                fill="#82ca9d"
                 name="Cycle"
-                activeDot={{ r: 6 }}
-                dot={{ r: 3 }}
-                animationDuration={1000}
+                animationDuration={800}
+                barSize={20} // Aumenta la larghezza delle barre
               />
-            </LineChart>
+
+              <Brush
+                dataKey="date"
+                height={30}
+                stroke="#8884d8"
+                startIndex={data.length - 10} // Mostra di default gli ultimi 10 anni
+                endIndex={data.length - 1} // Default fino all'ultimo anno disponibile
+                travellerWidth={10} // Rende più fluido lo spostamento
+              />
+            </BarChart>
           </ResponsiveContainer>
         </CardContent>
       </Card>
