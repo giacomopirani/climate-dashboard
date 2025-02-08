@@ -27,7 +27,7 @@ The app is built as a multi-page application with the following key sections:
 
 <br>
 
-<div style="text-align: center;">
+<div style=`text-align: center;`>
 <img src="./public/mobile-chart.png" alt="Mobile Chart" width="300" />
 </div>
 
