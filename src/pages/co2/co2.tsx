@@ -78,7 +78,7 @@ const CO2 = () => {
                 tickFormatter={(date) =>
                   new Date(date).getFullYear().toString()
                 }
-                interval={30} // Migliora la leggibilità sull'asse X
+                interval={30}
               />
               <YAxis tickFormatter={(tick) => tick.toLocaleString()} />
               <Tooltip content={CustomTooltip} />
@@ -89,7 +89,7 @@ const CO2 = () => {
                 fill="#8884d8"
                 name="Trend"
                 animationDuration={800}
-                barSize={20} // Aumenta la larghezza delle barre
+                barSize={20}
               />
 
               <Bar
@@ -97,16 +97,16 @@ const CO2 = () => {
                 fill="#82ca9d"
                 name="Cycle"
                 animationDuration={800}
-                barSize={20} // Aumenta la larghezza delle barre
+                barSize={20}
               />
 
               <Brush
                 dataKey="date"
                 height={30}
                 stroke="#8884d8"
-                startIndex={data.length - 10} // Mostra di default gli ultimi 10 anni
-                endIndex={data.length - 1} // Default fino all'ultimo anno disponibile
-                travellerWidth={10} // Rende più fluido lo spostamento
+                startIndex={data.length - 10}
+                endIndex={data.length - 1}
+                travellerWidth={10}
               />
             </BarChart>
           </ResponsiveContainer>
