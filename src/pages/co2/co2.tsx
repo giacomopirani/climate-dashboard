@@ -12,6 +12,7 @@ import { CO2Data } from "@/util/types/co2-types";
 import { useEffect, useState } from "react";
 import {
   CartesianGrid,
+  Legend,
   Line,
   LineChart,
   ResponsiveContainer,
@@ -35,7 +36,7 @@ const CO2 = () => {
           ...item,
           trend: parseFloat(item.trend),
           cycle: parseFloat(item.cycle),
-          date: formatCO2Date(item.year, item.month, item.day), // Usa la funzione qui
+          date: formatCO2Date(item.year, item.month, item.day),
         }));
         setData(formattedData);
       } catch (err) {
@@ -70,21 +71,40 @@ const CO2 = () => {
         <CardContent>
           <ResponsiveContainer width="100%" height={400}>
             <LineChart data={data}>
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="date" />
-              <YAxis />
+              <CartesianGrid strokeDasharray="3 3" strokeOpacity={0.5} />
+              <XAxis
+                dataKey="date"
+                tickFormatter={(date) =>
+                  new Date(date).toLocaleDateString("en-GB", {
+                    year: "numeric",
+                    month: "short",
+                  })
+                }
+              />
+              <YAxis tickFormatter={(tick) => tick.toLocaleString()} />
               <Tooltip content={CustomTooltip} />
+              <Legend verticalAlign="top" height={36} />
+
               <Line
                 type="monotone"
                 dataKey="trend"
                 stroke="#8884d8"
+                strokeWidth={3}
                 name="Trend"
+                activeDot={{ r: 6 }}
+                dot={{ r: 3 }}
+                animationDuration={1000}
               />
+
               <Line
                 type="monotone"
                 dataKey="cycle"
                 stroke="#82ca9d"
+                strokeWidth={3}
                 name="Cycle"
+                activeDot={{ r: 6 }}
+                dot={{ r: 3 }}
+                animationDuration={1000}
               />
             </LineChart>
           </ResponsiveContainer>
