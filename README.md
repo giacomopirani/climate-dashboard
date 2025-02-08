@@ -2,7 +2,7 @@
 
 Global Warming Tracker is a web application that provides an interactive overview of climate change data, displaying charts on various environmental indicators. You can explore Temperature, CO2, Methane, NO2, and Arctic Ice levels through easy-to-navigate visual charts.
 
-![Home Page](../climate-dashboard/src/assets/home-page.png)
+![Home Page](./public/home-page.png)
 
 ## Technologies Used
 
@@ -28,7 +28,7 @@ The app is built as a multi-page application with the following key sections:
 <br>
 
 <div style="text-align: center;">
-<img src="../climate-dashboard/src/assets/mobile-chart.png" alt="Mobile Chart" width="300" />
+<img src="./public/mobile-chart.png" alt="Mobile Chart" width="300" />
 </div>
 
 <br>
