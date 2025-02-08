@@ -41,7 +41,6 @@ const TemperatureChart: React.FC<TemperatureChartProps> = ({ data }) => {
         <YAxis tick={{ fontSize: window.innerWidth < 768 ? 10 : 12 }} />
         <Tooltip content={<TemperatureTooltip />} />
         <Legend verticalAlign="top" height={36} />
-
         <Line
           type="monotone"
           dataKey="station"
@@ -52,7 +51,6 @@ const TemperatureChart: React.FC<TemperatureChartProps> = ({ data }) => {
           dot={{ r: 3, fill: "#6a5acd", stroke: "white", strokeWidth: 1 }}
           animationDuration={600}
         />
-
         <Line
           type="monotone"
           dataKey="land"
@@ -71,7 +69,22 @@ const TemperatureChart: React.FC<TemperatureChartProps> = ({ data }) => {
             label="Focus"
           />
         )}
-        <Brush dataKey="time" height={20} stroke="#ff4500" />
+        <Brush
+          dataKey="time"
+          height={50}
+          stroke="#ff4500"
+          tickFormatter={formatDate}
+        />
+        <text
+          x="50%"
+          y={350}
+          fontSize={14}
+          fill="#666"
+          textAnchor="middle"
+          className="blinking-text"
+        >
+          Drag to select a range
+        </text>
       </LineChart>
     </ResponsiveContainer>
   );
