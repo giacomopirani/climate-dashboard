@@ -23,21 +23,27 @@ import { useCO2Data } from "../../hooks/use-co2-data";
 import CustomTooltip from "../tooltip/custom-tooltip";
 
 const CO2 = () => {
-  const [startDate, setStartDate] = useState<Date | null>(
-    new Date(new Date().setDate(new Date().getDate() - 7))
-  );
-  const [endDate, setEndDate] = useState<Date | null>(new Date());
+  // Stato per il range di date: default ultima settimana
+  const [dateRange, setDateRange] = useState<[Date | null, Date | null]>([
+    new Date(new Date().setDate(new Date().getDate() - 7)),
+    new Date(),
+  ]);
+  const [startDate, endDate] = dateRange;
+
+  // Stato per mostrare o nascondere il calendario a tutto schermo
+  const [showCalendar, setShowCalendar] = useState(false);
+
   const { data, isLoading, error } = useCO2Data();
 
-  const filteredData = useMemo(
-    () =>
-      data.filter(({ date }) => {
-        const d = new Date(date);
-        return (!startDate || d >= startDate) && (!endDate || d <= endDate);
-      }),
-    [data, startDate, endDate]
-  );
+  // Filtriamo i dati in base al range selezionato
+  const filteredData = useMemo(() => {
+    return data.filter(({ date }) => {
+      const d = new Date(date);
+      return (!startDate || d >= startDate) && (!endDate || d <= endDate);
+    });
+  }, [data, startDate, endDate]);
 
+  // Controllo: se la data di inizio è successiva a quella di fine, segnala l'errore
   if (startDate && endDate && startDate > endDate) {
     return (
       <div className="flex justify-center items-center h-screen">
@@ -57,46 +63,74 @@ const CO2 = () => {
 
   if (error) return <div className="text-red-500 text-center">{error}</div>;
 
+  // Calcola il numero di giorni selezionati
+  const numDays =
+    startDate && endDate
+      ? Math.round(
+          (endDate.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24)
+        )
+      : 0;
+
   return (
-    <div className="space-y-6 mt-6">
-      <h1 className="text-3xl font-bold">CO2 Levels</h1>
-      <div className="flex gap-4 items-center">
-        <div>
-          <label
-            htmlFor="start-date"
-            className="block text-sm font-bold text-gray-700 mb-1"
-          >
-            Start date:
-          </label>
-          <DatePicker
-            id="start-date"
-            selected={startDate}
-            onChange={setStartDate}
-            className="border p-2 rounded w-full"
-            placeholderText="Select the start date"
-            withPortal
-            calendarClassName="custom-calendar"
-          />
-        </div>
-        <div>
-          <label
-            htmlFor="end-date"
-            className="block text-sm font-bold text-gray-700 mb-1"
-          >
-            End date:
-          </label>
-          <DatePicker
-            id="end-date"
-            selected={endDate}
-            onChange={setEndDate}
-            className="border p-2 rounded w-full"
-            placeholderText="Select the end date"
-            withPortal
-            popperPlacement="bottom-end"
-          />
-        </div>
+    <div className="space-y-6 mt-6 relative">
+      <h1 className="text-3xl font-bold text-center">CO2 Levels</h1>
+
+      {/* Pulsante per aprire il calendario a tutto schermo */}
+      <div className="flex justify-center">
+        <button
+          className="px-4 py-2 bg-blue-500 text-white rounded"
+          onClick={() => setShowCalendar(true)}
+        >
+          Seleziona intervallo di date
+        </button>
       </div>
 
+      {/* Visualizzazione del range selezionato */}
+      {startDate && endDate && (
+        <div className="text-center text-gray-700">
+          <p>
+            Range selezionato:{" "}
+            <span className="font-semibold">
+              {startDate.toLocaleDateString()}
+            </span>{" "}
+            -{" "}
+            <span className="font-semibold">
+              {endDate.toLocaleDateString()}
+            </span>
+          </p>
+          <p>
+            {numDays} {numDays === 1 ? "giorno" : "giorni"} selezionati
+          </p>
+        </div>
+      )}
+
+      {/* Modal a tutto schermo per la selezione del range */}
+      {showCalendar && (
+        <div className="fixed inset-0 z-50 bg-white overflow-auto">
+          <div className="p-4">
+            <div className="flex justify-between items-center mb-4">
+              <h2 className="text-xl font-bold">Seleziona il range di date</h2>
+              <button
+                className="px-4 py-2 bg-red-500 text-white rounded"
+                onClick={() => setShowCalendar(false)}
+              >
+                Chiudi
+              </button>
+            </div>
+            <DatePicker
+              selectsRange
+              startDate={startDate}
+              endDate={endDate}
+              onChange={(update: [Date | null, Date | null]) =>
+                setDateRange(update)
+              }
+              inline
+            />
+          </div>
+        </div>
+      )}
+
+      {/* Visualizzazione del grafico */}
       {filteredData.length === 0 ? (
         <div className="text-center text-gray-500">
           Nessun dato disponibile per questo intervallo.
