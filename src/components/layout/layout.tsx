@@ -1,5 +1,4 @@
 import type { ReactNode } from "react";
-import logoClimate from "../../assets/logo.png";
 import Sidebar from "../layout/sidebar";
 import ThemeToggle from "../ui/theme-toggle";
 import Footer from "./footer";
@@ -17,13 +16,6 @@ export default function Layout({ children }: LayoutProps) {
       </div>
       <div className="flex flex-col flex-grow w-full lg:pl-[60px]">
         <header className="bg-secondary-foreground fixed top-0 left-0 right-0 flex items-center p-4 z-10">
-          <div className="flex-grow flex justify-center">
-            <img
-              src={logoClimate}
-              alt="Climate Change Visualization"
-              className="h-12 w-12 object-cover rounded-full ml-8"
-            />
-          </div>
           <div className="flex items-center">
             <ThemeToggle />
           </div>

@@ -24,10 +24,12 @@ import { useCO2Data } from "../../hooks/use-co2-data";
 import CustomTooltip from "../tooltip/custom-tooltip";
 
 const CO2 = () => {
-  const [dateRange, setDateRange] = useState<[Date | null, Date | null]>([
-    new Date(new Date().setDate(new Date().getDate() - 7)),
-    new Date(),
-  ]);
+  const defaultStart = new Date(new Date().setDate(new Date().getDate() - 7));
+  const defaultEnd = new Date();
+  const defaultRange: [Date | null, Date | null] = [defaultStart, defaultEnd];
+
+  const [dateRange, setDateRange] =
+    useState<[Date | null, Date | null]>(defaultRange);
   const [startDate, endDate] = dateRange;
 
   const [showCalendar, setShowCalendar] = useState(false);
@@ -45,7 +47,7 @@ const CO2 = () => {
     return (
       <div className="flex justify-center items-center h-screen">
         <p className="text-red-500 text-center">
-          The start date cannot be later than the end date.
+          La data di inizio non può essere successiva alla data di fine.
         </p>
       </div>
     );
@@ -73,7 +75,7 @@ const CO2 = () => {
 
       <div className="flex justify-center">
         <button
-          className="px-4 py-2 bg-blue-700 text-white rounded flex gap-2"
+          className="flex items-center gap-2 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700"
           onClick={() => setShowCalendar(true)}
         >
           <Calendar size={20} />
@@ -105,10 +107,10 @@ const CO2 = () => {
             <header className="flex justify-between items-center px-4 py-3 border-b">
               <h2 className="text-xl font-bold">Select the date range</h2>
               <button
-                onClick={() => setShowCalendar(false)}
+                onClick={() => setDateRange(defaultRange)}
                 className="text-red-500 hover:text-red-700"
               >
-                Close
+                Reset
               </button>
             </header>
 
