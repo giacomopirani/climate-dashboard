@@ -23,7 +23,7 @@ export function TemperatureYearRangeModal({
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
       <div className="bg-white w-full max-w-md md:rounded-lg p-4">
         <header className="flex justify-between items-center border-b pb-2 mb-4">
-          <h2 className="text-xl font-bold">Select Start Year</h2>
+          <h2 className="text-xl font-bold text-black">Select Start Year</h2>
           <button
             onClick={() => setYearRange(defaultRange)}
             className="text-red-500 hover:text-red-700"
@@ -32,7 +32,9 @@ export function TemperatureYearRangeModal({
           </button>
         </header>
         <div>
-          <label className="block mb-1 font-semibold">Start Year</label>
+          <label className="block mb-1 font-semibold text-black">
+            Start Year
+          </label>
           <DatePicker
             selected={startYear}
             onChange={(date: Date | null) => {
@@ -48,14 +50,14 @@ export function TemperatureYearRangeModal({
             }}
             showYearPicker
             dateFormat="yyyy"
-            className="w-full border p-2 rounded"
+            className="w-full border p-2 rounded text-black"
             minDate={MIN_DATE}
             maxDate={MAX_DATE}
           />
         </div>
         {startYear && endYear && (
           <div className="mt-4">
-            <p className="font-semibold">
+            <p className="font-semibold text-black">
               Range: {startYear.getFullYear()} - {endYear.getFullYear()}
             </p>
           </div>
@@ -63,7 +65,7 @@ export function TemperatureYearRangeModal({
         <footer className="mt-4 border-t pt-2">
           <button
             onClick={onClose}
-            className="w-full px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+            className="w-full px-4 py-2 bg-teal-500 text-white rounded hover:bg-teal-700"
           >
             Save and Close
           </button>

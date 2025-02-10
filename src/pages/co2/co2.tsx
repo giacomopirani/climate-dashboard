@@ -85,7 +85,7 @@ const CO2 = () => {
 
       {startDate && endDate && (
         <div className="text-center text-gray-700">
-          <p>
+          <p className="font-bold">
             Range select:{" "}
             <span className="font-semibold text-orange-500">
               {startDate.toLocaleDateString()}
