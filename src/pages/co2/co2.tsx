@@ -73,7 +73,9 @@ const CO2 = () => {
             selected={startDate}
             onChange={setStartDate}
             className="border p-2 rounded w-full"
-            placeholderText="Seleziona la data di inizio"
+            placeholderText="Select the start date"
+            withPortal
+            calendarClassName="custom-calendar"
           />
         </div>
         <div>
@@ -88,7 +90,9 @@ const CO2 = () => {
             selected={endDate}
             onChange={setEndDate}
             className="border p-2 rounded w-full"
-            placeholderText="Seleziona la data di fine"
+            placeholderText="Select the end date"
+            withPortal
+            popperPlacement="bottom-end"
           />
         </div>
       </div>
