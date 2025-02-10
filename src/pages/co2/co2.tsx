@@ -10,10 +10,11 @@ import { formatCO2Date } from "@/util/format-date";
 import LoadingSpinner from "@/util/loading-spinner";
 import { CO2Data } from "@/util/types/co2-types";
 import { useEffect, useState } from "react";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 import {
   Bar,
   BarChart,
-  Brush,
   CartesianGrid,
   Legend,
   ResponsiveContainer,
@@ -25,8 +26,11 @@ import CustomTooltip from "../tooltip/custom-tooltip";
 
 const CO2 = () => {
   const [data, setData] = useState<CO2Data[]>([]);
+  const [filteredData, setFilteredData] = useState<CO2Data[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [startDate, setStartDate] = useState<Date | null>(null);
+  const [endDate, setEndDate] = useState<Date | null>(null);
 
   useEffect(() => {
     const loadData = async () => {
@@ -40,6 +44,7 @@ const CO2 = () => {
           date: formatCO2Date(item.year, item.month, item.day),
         }));
         setData(formattedData);
+        setFilteredData(formattedData);
       } catch (err) {
         setError("Failed to load CO2 data");
         console.error(err);
@@ -50,6 +55,18 @@ const CO2 = () => {
 
     loadData();
   }, []);
+
+  useEffect(() => {
+    const filtered = data.filter((item) => {
+      const itemDate = new Date(item.date);
+
+      if (startDate && itemDate < startDate) return false;
+
+      if (endDate && itemDate > endDate) return false;
+      return true;
+    });
+    setFilteredData(filtered);
+  }, [startDate, endDate, data]);
 
   if (isLoading)
     return (
@@ -62,6 +79,24 @@ const CO2 = () => {
   return (
     <div className="space-y-6 mt-6">
       <h1 className="text-3xl font-bold">CO2 Levels</h1>
+      <div className="flex gap-4 items-center">
+        <div>
+          <label>Start Date:</label>
+          <DatePicker
+            selected={startDate}
+            onChange={(date) => setStartDate(date)}
+            className="border p-2 rounded"
+          />
+        </div>
+        <div>
+          <label>End Date:</label>
+          <DatePicker
+            selected={endDate}
+            onChange={(date) => setEndDate(date)}
+            className="border p-2 rounded"
+          />
+        </div>
+      </div>
       <Card>
         <CardHeader>
           <CardTitle>CO2 Concentration</CardTitle>
@@ -71,7 +106,7 @@ const CO2 = () => {
         </CardHeader>
         <CardContent>
           <ResponsiveContainer width="100%" height={400}>
-            <BarChart data={data}>
+            <BarChart data={filteredData}>
               <CartesianGrid strokeDasharray="3 3" strokeOpacity={0.5} />
               <XAxis
                 dataKey="date"
@@ -98,15 +133,6 @@ const CO2 = () => {
                 name="Cycle"
                 animationDuration={800}
                 barSize={20}
-              />
-
-              <Brush
-                dataKey="date"
-                height={30}
-                stroke="#8884d8"
-                startIndex={data.length - 10}
-                endIndex={data.length - 1}
-                travellerWidth={10}
               />
             </BarChart>
           </ResponsiveContainer>

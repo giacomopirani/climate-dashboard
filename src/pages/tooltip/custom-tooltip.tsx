@@ -6,34 +6,13 @@ const CustomTooltip: React.FC<TooltipProps<number, string>> = ({
   payload,
   label,
 }) => {
-  if (!active || !payload || payload.length === 0) return null;
+  if (!active || !payload?.length) return null;
 
   return (
-    <div
-      style={{
-        backgroundColor: "rgba(255, 255, 255, 0.9)",
-        border: "1px solid #ccc",
-        padding: "10px",
-        borderRadius: "8px",
-        boxShadow: "0px 4px 8px rgba(0,0,0,0.2)",
-      }}
-    >
-      <p
-        style={{
-          fontSize: "14px",
-          fontWeight: "bold",
-          color: "black",
-          marginBottom: "5px",
-        }}
-      >
-        {label}
-      </p>
-
+    <div className="bg-white/90 border border-gray-300 p-3 rounded-lg shadow-md">
+      <p className="text-sm font-bold text-black mb-1">{label}</p>
       {payload.map((entry, index) => (
-        <p
-          key={index}
-          style={{ fontSize: "13px", margin: "5px 0", color: entry.color }}
-        >
+        <p key={index} className="text-xs" style={{ color: entry.color }}>
           {entry.name}: <strong>{entry.value}</strong>
         </p>
       ))}
