@@ -1,15 +1,7 @@
-import {
-  Atom,
-  CloudRain,
-  Home,
-  Snowflake,
-  Thermometer,
-  Wind,
-} from "lucide-react";
+import { Atom, CloudRain, Snowflake, Thermometer, Wind } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 
 const navigation = [
-  { name: "Home", href: "/", icon: Home },
   { name: "Temperature", href: "/temperature", icon: Thermometer },
   { name: "CO2", href: "/co2", icon: Wind },
   { name: "Methane", href: "/methane", icon: CloudRain },
@@ -22,7 +14,7 @@ export function MobileNavigation() {
 
   return (
     <div className="fixed bottom-0 left-0 right-0 bg-primary text-primary-foreground border-t lg:hidden z-50">
-      <nav className="flex justify-between items-center h-16">
+      <nav className="flex justify-between items-center h-14">
         {navigation.map((item) => {
           const isActive = location.pathname === item.href;
           return (
