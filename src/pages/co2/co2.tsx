@@ -47,7 +47,7 @@ const CO2 = () => {
     return (
       <div className="flex justify-center items-center h-screen">
         <p className="text-red-500 text-center">
-          La data di inizio non può essere successiva alla data di fine.
+          The start date shall not be later than the end date.
         </p>
       </div>
     );
@@ -66,7 +66,7 @@ const CO2 = () => {
     startDate && endDate
       ? Math.round(
           (endDate.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24)
-        )
+        ) + 1
       : 0;
 
   return (
@@ -75,7 +75,7 @@ const CO2 = () => {
 
       <div className="flex justify-center">
         <button
-          className="flex items-center gap-2 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700"
+          className="flex items-center gap-2 px-4 py-2 bg-teal-500 text-white rounded hover:bg-teal-700"
           onClick={() => setShowCalendar(true)}
         >
           <Calendar size={20} />
@@ -87,15 +87,15 @@ const CO2 = () => {
         <div className="text-center text-gray-700">
           <p>
             Range select:{" "}
-            <span className="font-semibold">
+            <span className="font-semibold text-orange-500">
               {startDate.toLocaleDateString()}
             </span>{" "}
             -{" "}
-            <span className="font-semibold">
+            <span className="font-semibold text-orange-500">
               {endDate.toLocaleDateString()}
             </span>
           </p>
-          <p>
+          <p className="text-green-700">
             {numDays} {numDays === 1 ? "day" : "days"} selected
           </p>
         </div>
@@ -129,7 +129,7 @@ const CO2 = () => {
             <footer className="px-4 py-3 border-t">
               <button
                 onClick={() => setShowCalendar(false)}
-                className="w-full px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+                className="w-full px-4 py-2 bg-teal-500 text-white rounded hover:bg-teal-700"
               >
                 Save and Close
               </button>
@@ -139,7 +139,7 @@ const CO2 = () => {
       )}
 
       {filteredData.length === 0 ? (
-        <div className="text-center text-gray-500">
+        <div className="text-center text-red-700 font-normal mt-8">
           No data available for this interval.
         </div>
       ) : (
