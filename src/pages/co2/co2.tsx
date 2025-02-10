@@ -23,19 +23,16 @@ import { useCO2Data } from "../../hooks/use-co2-data";
 import CustomTooltip from "../tooltip/custom-tooltip";
 
 const CO2 = () => {
-  // Stato per il range di date: default ultima settimana
   const [dateRange, setDateRange] = useState<[Date | null, Date | null]>([
     new Date(new Date().setDate(new Date().getDate() - 7)),
     new Date(),
   ]);
   const [startDate, endDate] = dateRange;
 
-  // Stato per mostrare o nascondere il calendario a tutto schermo
   const [showCalendar, setShowCalendar] = useState(false);
 
   const { data, isLoading, error } = useCO2Data();
 
-  // Filtriamo i dati in base al range selezionato
   const filteredData = useMemo(() => {
     return data.filter(({ date }) => {
       const d = new Date(date);
@@ -43,12 +40,11 @@ const CO2 = () => {
     });
   }, [data, startDate, endDate]);
 
-  // Controllo: se la data di inizio è successiva a quella di fine, segnala l'errore
   if (startDate && endDate && startDate > endDate) {
     return (
       <div className="flex justify-center items-center h-screen">
         <p className="text-red-500 text-center">
-          La data di inizio non può essere successiva alla data di fine.
+          The start date cannot be later than the end date.
         </p>
       </div>
     );
@@ -63,7 +59,6 @@ const CO2 = () => {
 
   if (error) return <div className="text-red-500 text-center">{error}</div>;
 
-  // Calcola il numero di giorni selezionati
   const numDays =
     startDate && endDate
       ? Math.round(
@@ -75,21 +70,19 @@ const CO2 = () => {
     <div className="space-y-6 mt-6 relative">
       <h1 className="text-3xl font-bold text-center">CO2 Levels</h1>
 
-      {/* Pulsante per aprire il calendario a tutto schermo */}
       <div className="flex justify-center">
         <button
-          className="px-4 py-2 bg-blue-500 text-white rounded"
+          className="px-4 py-2 bg-blue-600 text-white rounded"
           onClick={() => setShowCalendar(true)}
         >
-          Seleziona intervallo di date
+          Select date range
         </button>
       </div>
 
-      {/* Visualizzazione del range selezionato */}
       {startDate && endDate && (
         <div className="text-center text-gray-700">
           <p>
-            Range selezionato:{" "}
+            Range select:{" "}
             <span className="font-semibold">
               {startDate.toLocaleDateString()}
             </span>{" "}
@@ -99,22 +92,21 @@ const CO2 = () => {
             </span>
           </p>
           <p>
-            {numDays} {numDays === 1 ? "giorno" : "giorni"} selezionati
+            {numDays} {numDays === 1 ? "day" : "days"} selected
           </p>
         </div>
       )}
 
-      {/* Modal a tutto schermo per la selezione del range */}
       {showCalendar && (
         <div className="fixed inset-0 z-50 bg-white overflow-auto">
-          <div className="p-4">
+          <div className="p-4 flex flex-col object-contain">
             <div className="flex justify-between items-center mb-4">
-              <h2 className="text-xl font-bold">Seleziona il range di date</h2>
+              <h2 className="text-xl font-bold">Select the date range</h2>
               <button
                 className="px-4 py-2 bg-red-500 text-white rounded"
                 onClick={() => setShowCalendar(false)}
               >
-                Chiudi
+                Close
               </button>
             </div>
             <DatePicker
@@ -130,10 +122,9 @@ const CO2 = () => {
         </div>
       )}
 
-      {/* Visualizzazione del grafico */}
       {filteredData.length === 0 ? (
         <div className="text-center text-gray-500">
-          Nessun dato disponibile per questo intervallo.
+          No data available for this interval.
         </div>
       ) : (
         <Card>
