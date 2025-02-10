@@ -1,4 +1,6 @@
+import { BarChart2 } from "lucide-react";
 import type { ReactNode } from "react";
+import { Link } from "react-router-dom";
 import Sidebar from "../layout/sidebar";
 import ThemeToggle from "../ui/theme-toggle";
 import Footer from "./footer";
@@ -16,7 +18,11 @@ export default function Layout({ children }: LayoutProps) {
       </div>
       <div className="flex flex-col flex-grow w-full lg:pl-[60px]">
         <header className="bg-secondary-foreground fixed top-0 left-0 right-0 flex items-center p-2 pl-4 z-10">
-          <div className="flex items-center">
+          <div className="flex-grow" />
+          <div className="flex items-center space-x-4">
+            <Link to="/">
+              <BarChart2 className="h-10 w-10 cursor-pointer text-white dark:text-blue-950 hover:text-teal-700 dark:hover:text-teal-700" />
+            </Link>
             <ThemeToggle />
           </div>
         </header>

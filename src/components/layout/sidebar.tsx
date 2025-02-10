@@ -1,7 +1,6 @@
 import { cn } from "@/lib/utils";
 import {
   Atom,
-  BarChart2,
   ChevronLeft,
   ChevronRight,
   CloudRain,
@@ -33,17 +32,17 @@ export default function Sidebar() {
       )}
     >
       <div className="flex items-center justify-between h-16 px-4 mt-14">
-        {!isCollapsed && (
-          <Link to="/" className="ml-3 flex items-center space-x-2">
-            <BarChart2 className="h-6 w-6" />
-            <span className="text-sm font-semibold">Home</span>
-          </Link>
-        )}
         <button
           onClick={() => setIsCollapsed(!isCollapsed)}
-          className="ml-auto"
+          className="ml-auto p-2 hover:text-teal-700 cursor-pointer transition-colors duration-300"
+          title={isCollapsed ? "Expand sidebar" : "Collapse sidebar"}
+          aria-label={isCollapsed ? "Expand sidebar" : "Collapse sidebar"}
         >
-          {isCollapsed ? <ChevronRight /> : <ChevronLeft />}
+          {isCollapsed ? (
+            <ChevronRight className="w-6 h-6" />
+          ) : (
+            <ChevronLeft className="w-6 h-6" />
+          )}
         </button>
       </div>
 
