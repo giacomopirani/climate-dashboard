@@ -6,6 +6,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import LoadingSpinner from "@/util/loading-spinner";
+import { Calendar } from "lucide-react";
 import { useMemo, useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -72,9 +73,10 @@ const CO2 = () => {
 
       <div className="flex justify-center">
         <button
-          className="px-4 py-2 bg-blue-600 text-white rounded"
+          className="px-4 py-2 bg-blue-700 text-white rounded flex gap-2"
           onClick={() => setShowCalendar(true)}
         >
+          <Calendar size={20} />
           Select date range
         </button>
       </div>
@@ -98,26 +100,38 @@ const CO2 = () => {
       )}
 
       {showCalendar && (
-        <div className="fixed inset-0 z-50 bg-white overflow-auto">
-          <div className="p-4 flex flex-col object-contain">
-            <div className="flex justify-between items-center mb-4">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+          <div className="bg-white w-full max-w-md h-full md:h-auto md:rounded-lg">
+            <header className="flex justify-between items-center px-4 py-3 border-b">
               <h2 className="text-xl font-bold">Select the date range</h2>
               <button
-                className="px-4 py-2 bg-red-500 text-white rounded"
                 onClick={() => setShowCalendar(false)}
+                className="text-red-500 hover:text-red-700"
               >
                 Close
               </button>
-            </div>
-            <DatePicker
-              selectsRange
-              startDate={startDate}
-              endDate={endDate}
-              onChange={(update: [Date | null, Date | null]) =>
-                setDateRange(update)
-              }
-              inline
-            />
+            </header>
+
+            <main className="p-4 overflow-auto flex justify-center">
+              <DatePicker
+                selectsRange
+                startDate={startDate}
+                endDate={endDate}
+                onChange={(update: [Date | null, Date | null]) =>
+                  setDateRange(update)
+                }
+                inline
+              />
+            </main>
+
+            <footer className="px-4 py-3 border-t">
+              <button
+                onClick={() => setShowCalendar(false)}
+                className="w-full px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+              >
+                Save and Close
+              </button>
+            </footer>
           </div>
         </div>
       )}
