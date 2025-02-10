@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import {
-  Brush,
   CartesianGrid,
   Legend,
   Line,
@@ -13,7 +12,7 @@ import {
 } from "recharts";
 import { formatDate } from "../../util/format-date";
 import { TemperatureData } from "../../util/types/temperature-types";
-import TemperatureTooltip from "./custom-tooltip-temperature";
+import CustomTooltipTemperature from "../tooltip/custom-tooltip-temperature";
 
 interface TemperatureChartProps {
   data: TemperatureData[];
@@ -39,7 +38,7 @@ const TemperatureChart: React.FC<TemperatureChartProps> = ({ data }) => {
           tick={{ fontSize: window.innerWidth < 768 ? 10 : 12 }}
         />
         <YAxis tick={{ fontSize: window.innerWidth < 768 ? 10 : 12 }} />
-        <Tooltip content={<TemperatureTooltip />} />
+        <Tooltip content={<CustomTooltipTemperature />} />
         <Legend verticalAlign="top" height={36} />
         <Line
           type="monotone"
@@ -69,22 +68,6 @@ const TemperatureChart: React.FC<TemperatureChartProps> = ({ data }) => {
             label="Focus"
           />
         )}
-        <Brush
-          dataKey="time"
-          height={50}
-          stroke="#ff4500"
-          tickFormatter={formatDate}
-        />
-        <text
-          x="50%"
-          y={350}
-          fontSize={14}
-          fill="#666"
-          textAnchor="middle"
-          className="blinking-text"
-        >
-          Drag to select a range
-        </text>
       </LineChart>
     </ResponsiveContainer>
   );

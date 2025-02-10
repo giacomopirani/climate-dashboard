@@ -1,11 +1,15 @@
-const CustomTooltipTemperature = ({
-  active,
-  payload,
-  label,
-}: {
+import React from "react";
+
+interface CustomTooltipTemperatureProps {
   active?: boolean;
   payload?: any[];
   label?: string;
+}
+
+const CustomTooltipTemperature: React.FC<CustomTooltipTemperatureProps> = ({
+  active,
+  payload,
+  label,
 }) => {
   if (active && payload && payload.length) {
     const labelValue = label ?? "";
