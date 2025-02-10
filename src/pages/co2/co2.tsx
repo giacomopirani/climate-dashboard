@@ -5,11 +5,8 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { api } from "@/lib/api";
-import { formatCO2Date } from "@/util/format-date";
 import LoadingSpinner from "@/util/loading-spinner";
-import { CO2Data } from "@/util/types/co2-types";
-import { useEffect, useState } from "react";
+import { useMemo, useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import {
@@ -22,51 +19,34 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
+import { useCO2Data } from "../../hooks/use-co2-data";
 import CustomTooltip from "../tooltip/custom-tooltip";
 
 const CO2 = () => {
-  const [data, setData] = useState<CO2Data[]>([]);
-  const [filteredData, setFilteredData] = useState<CO2Data[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-  const [startDate, setStartDate] = useState<Date | null>(null);
-  const [endDate, setEndDate] = useState<Date | null>(null);
+  const [startDate, setStartDate] = useState<Date | null>(
+    new Date(new Date().setDate(new Date().getDate() - 7))
+  );
+  const [endDate, setEndDate] = useState<Date | null>(new Date());
+  const { data, isLoading, error } = useCO2Data();
 
-  useEffect(() => {
-    const loadData = async () => {
-      try {
-        setIsLoading(true);
-        const result = await api.getCO2();
-        const formattedData = result.co2.map((item: any) => ({
-          ...item,
-          trend: parseFloat(item.trend),
-          cycle: parseFloat(item.cycle),
-          date: formatCO2Date(item.year, item.month, item.day),
-        }));
-        setData(formattedData);
-        setFilteredData(formattedData);
-      } catch (err) {
-        setError("Failed to load CO2 data");
-        console.error(err);
-      } finally {
-        setIsLoading(false);
-      }
-    };
+  const filteredData = useMemo(
+    () =>
+      data.filter(({ date }) => {
+        const d = new Date(date);
+        return (!startDate || d >= startDate) && (!endDate || d <= endDate);
+      }),
+    [data, startDate, endDate]
+  );
 
-    loadData();
-  }, []);
-
-  useEffect(() => {
-    const filtered = data.filter((item) => {
-      const itemDate = new Date(item.date);
-
-      if (startDate && itemDate < startDate) return false;
-
-      if (endDate && itemDate > endDate) return false;
-      return true;
-    });
-    setFilteredData(filtered);
-  }, [startDate, endDate, data]);
+  if (startDate && endDate && startDate > endDate) {
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <p className="text-red-500 text-center">
+          La data di inizio non può essere successiva alla data di fine.
+        </p>
+      </div>
+    );
+  }
 
   if (isLoading)
     return (
@@ -74,6 +54,7 @@ const CO2 = () => {
         <LoadingSpinner />
       </div>
     );
+
   if (error) return <div className="text-red-500 text-center">{error}</div>;
 
   return (
@@ -81,63 +62,86 @@ const CO2 = () => {
       <h1 className="text-3xl font-bold">CO2 Levels</h1>
       <div className="flex gap-4 items-center">
         <div>
-          <label>Start Date:</label>
+          <label
+            htmlFor="start-date"
+            className="block text-sm font-bold text-gray-700 mb-1"
+          >
+            Start date:
+          </label>
           <DatePicker
+            id="start-date"
             selected={startDate}
-            onChange={(date) => setStartDate(date)}
-            className="border p-2 rounded"
+            onChange={setStartDate}
+            className="border p-2 rounded w-full"
+            placeholderText="Seleziona la data di inizio"
           />
         </div>
         <div>
-          <label>End Date:</label>
+          <label
+            htmlFor="end-date"
+            className="block text-sm font-bold text-gray-700 mb-1"
+          >
+            End date:
+          </label>
           <DatePicker
+            id="end-date"
             selected={endDate}
-            onChange={(date) => setEndDate(date)}
-            className="border p-2 rounded"
+            onChange={setEndDate}
+            className="border p-2 rounded w-full"
+            placeholderText="Seleziona la data di fine"
           />
         </div>
       </div>
-      <Card>
-        <CardHeader>
-          <CardTitle>CO2 Concentration</CardTitle>
-          <CardDescription>
-            Atmospheric CO2 concentration over time
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <ResponsiveContainer width="100%" height={400}>
-            <BarChart data={filteredData}>
-              <CartesianGrid strokeDasharray="3 3" strokeOpacity={0.5} />
-              <XAxis
-                dataKey="date"
-                tickFormatter={(date) =>
-                  new Date(date).getFullYear().toString()
-                }
-                interval={30}
-              />
-              <YAxis tickFormatter={(tick) => tick.toLocaleString()} />
-              <Tooltip content={CustomTooltip} />
-              <Legend verticalAlign="top" height={36} />
 
-              <Bar
-                dataKey="trend"
-                fill="#8884d8"
-                name="Trend"
-                animationDuration={800}
-                barSize={20}
-              />
-
-              <Bar
-                dataKey="cycle"
-                fill="#82ca9d"
-                name="Cycle"
-                animationDuration={800}
-                barSize={20}
-              />
-            </BarChart>
-          </ResponsiveContainer>
-        </CardContent>
-      </Card>
+      {filteredData.length === 0 ? (
+        <div className="text-center text-gray-500">
+          Nessun dato disponibile per questo intervallo.
+        </div>
+      ) : (
+        <Card>
+          <CardHeader>
+            <CardTitle>CO2 Concentration</CardTitle>
+            <CardDescription>
+              Atmospheric CO2 concentration over time
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <ResponsiveContainer width="100%" height={400}>
+              <BarChart data={filteredData}>
+                <CartesianGrid strokeDasharray="3 3" strokeOpacity={0.5} />
+                <XAxis
+                  dataKey="date"
+                  tickFormatter={(date) =>
+                    new Date(date).getFullYear().toString()
+                  }
+                  interval={30}
+                  tick={{ fill: "#555", fontSize: 12 }}
+                />
+                <YAxis
+                  tickFormatter={(tick) => tick.toLocaleString()}
+                  tick={{ fill: "#555", fontSize: 12 }}
+                />
+                <Tooltip content={CustomTooltip} />
+                <Legend verticalAlign="top" height={36} />
+                <Bar
+                  dataKey="trend"
+                  fill="#8884d8"
+                  name="Trend"
+                  animationDuration={800}
+                  barSize={35}
+                />
+                <Bar
+                  dataKey="cycle"
+                  fill="#82ca9d"
+                  name="Cycle"
+                  animationDuration={800}
+                  barSize={35}
+                />
+              </BarChart>
+            </ResponsiveContainer>
+          </CardContent>
+        </Card>
+      )}
     </div>
   );
 };

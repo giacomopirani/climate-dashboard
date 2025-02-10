@@ -102,3 +102,20 @@ html {
 .blinking-text {
   animation: blink 2s infinite;
 }
+
+.custom-calendar {
+  background-color: #f9fafb;
+  border: 1px solid #e5e7eb;
+  border-radius: 0.375rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.custom-popper {
+  z-index: 9999;
+}
+
+.react-datepicker__day--selected,
+.react-datepicker__day--keyboard-selected {
+  background-color: #8884d8;
+  color: white;
+}
