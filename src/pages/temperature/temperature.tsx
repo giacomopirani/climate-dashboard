@@ -80,14 +80,14 @@ const Temperature: React.FC = () => {
           className="flex items-center gap-2 px-4 py-2 bg-teal-500 text-white rounded hover:bg-teal-700"
         >
           <Calendar size={20} />
-          Select year range
+          Select Year range
         </button>
       </div>
 
       {startYear && endYear && (
         <div className="text-center text-gray-700">
           <p className="font-bold">
-            Range select:{" "}
+            Selected range:{" "}
             <span className="font-semibold text-orange-500">
               {startYear.getFullYear()}
             </span>{" "}

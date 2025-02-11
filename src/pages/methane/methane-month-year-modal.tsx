@@ -18,7 +18,7 @@ export function MethaneMonthYearModal({
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
       <div className="bg-white w-full max-w-md md:rounded-lg p-4 flex flex-col">
         <header className="flex justify-between items-center px-4 py-3 border-b">
-          <h2 className="text-xl font-bold">Select Month & Year</h2>
+          <h2 className="text-xl font-bold text-black">Select Month & Year</h2>
           <button
             onClick={() => setSelectedMonth(defaultMonth)}
             className="text-red-500 hover:text-red-700"
@@ -27,13 +27,13 @@ export function MethaneMonthYearModal({
           </button>
         </header>
 
-        <main className="flex-grow p-4 flex justify-center">
+        <main className="flex-grow p-4 flex justify-center ">
           <DatePicker
             selected={selectedMonth}
             onChange={(date: Date | null) => setSelectedMonth(date)}
             showMonthYearPicker
             dateFormat="MM/yyyy"
-            className="w-full border p-2 rounded"
+            className="w-full border p-2 rounded text-black"
           />
         </main>
 

@@ -11,9 +11,10 @@ import { MethaneData } from "@/util/types/methane-types";
 import { Calendar } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 import {
+  Bar,
+  BarChart,
   CartesianGrid,
-  Line,
-  LineChart,
+  Legend,
   ResponsiveContainer,
   Tooltip,
   XAxis,
@@ -23,8 +24,41 @@ import LoadingSpinner from "../../util/loading-spinner";
 import CustomTooltip from "../tooltip/custom-tooltip";
 import { MethaneMonthYearModal } from "./methane-month-year-modal";
 
+interface ExtendedMethaneData extends MethaneData {
+  dateObj: Date;
+}
+
+const generateChartData = (
+  start: Date,
+  end: Date,
+  data: ExtendedMethaneData[]
+): Array<{ date: string; average: number; trend: number }> => {
+  const totalMonths =
+    (end.getFullYear() - start.getFullYear()) * 12 +
+    (end.getMonth() - start.getMonth()) +
+    1;
+  const result = [];
+  for (let i = 0; i < totalMonths; i++) {
+    const current = new Date(start.getFullYear(), start.getMonth() + i, 1);
+    const label = formatDate(
+      `${current.getFullYear()}.${current.getMonth() + 1}`
+    );
+    const record = data.find(
+      (d) =>
+        d.dateObj.getFullYear() === current.getFullYear() &&
+        d.dateObj.getMonth() === current.getMonth()
+    );
+    result.push({
+      date: label,
+      average: record ? record.average : 0,
+      trend: record ? record.trend : 0,
+    });
+  }
+  return result;
+};
+
 const Methane = () => {
-  const [data, setData] = useState<MethaneData[]>([]);
+  const [data, setData] = useState<ExtendedMethaneData[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -33,13 +67,22 @@ const Methane = () => {
       try {
         setIsLoading(true);
         const result = await api.getMethane();
-        const formattedData = result.methane.map((item: any) => ({
-          date: formatDate(item.date),
-          average: parseFloat(item.average),
-          trend: parseFloat(item.trend),
-          averageUnc: parseFloat(item.averageUnc),
-          trendUnc: parseFloat(item.trendUnc),
-        }));
+        const formattedData: ExtendedMethaneData[] = result.methane.map(
+          (item: any) => {
+            const parts = item.date.split(".");
+            const year = Number(parts[0]);
+            const month = Number(parts[1]);
+            const dateObj = new Date(year, month - 1, 1);
+            return {
+              date: formatDate(item.date),
+              dateObj,
+              average: parseFloat(item.average),
+              trend: parseFloat(item.trend),
+              averageUnc: parseFloat(item.averageUnc),
+              trendUnc: parseFloat(item.trendUnc),
+            };
+          }
+        );
         setData(formattedData);
       } catch (err) {
         setError("Failed to load methane data");
@@ -51,7 +94,7 @@ const Methane = () => {
     loadData();
   }, []);
 
-  const defaultMonth = new Date();
+  const defaultMonth = new Date(2023, 9, 1);
   const [selectedMonth, setSelectedMonth] = useState<Date | null>(defaultMonth);
   const [showMonthPicker, setShowMonthPicker] = useState(false);
 
@@ -59,16 +102,13 @@ const Methane = () => {
     ? new Date(selectedMonth.getFullYear(), selectedMonth.getMonth(), 1)
     : null;
   const endDate = selectedMonth
-    ? new Date(selectedMonth.getFullYear(), selectedMonth.getMonth() + 12, 0)
+    ? new Date(selectedMonth.getFullYear() + 1, selectedMonth.getMonth() + 1, 0)
     : null;
 
-  const filteredData = useMemo(() => {
-    if (!startDate || !endDate) return data;
-    return data.filter(({ date }) => {
-      const d = new Date(date);
-      return d >= startDate && d <= endDate;
-    });
-  }, [data, startDate, endDate]);
+  const chartData = useMemo(() => {
+    if (!startDate || !endDate) return [];
+    return generateChartData(startDate, endDate, data);
+  }, [startDate, endDate, data]);
 
   if (isLoading)
     return (
@@ -80,8 +120,7 @@ const Methane = () => {
 
   return (
     <div className="space-y-6 mt-6">
-      <h1 className="text-3xl font-bold">Methane Levels</h1>
-
+      <h1 className="text-3xl font-bold flex justify-center">Methane Levels</h1>
       <div className="flex justify-center">
         <button
           className="flex items-center gap-2 px-4 py-2 bg-teal-500 text-white rounded hover:bg-teal-700"
@@ -91,21 +130,20 @@ const Methane = () => {
           Select Month & Year
         </button>
       </div>
-
       {selectedMonth && startDate && endDate && (
         <div className="text-center text-gray-700">
           <p className="font-bold">
             Selected range:{" "}
             <span className="font-semibold text-orange-500">
-              {selectedMonth.toLocaleDateString("it-IT", {
-                month: "long",
+              {selectedMonth.toLocaleDateString("en-En", {
+                month: "short",
                 year: "numeric",
               })}
             </span>{" "}
             -{" "}
             <span className="font-semibold text-orange-500">
-              {endDate.toLocaleDateString("it-IT", {
-                month: "long",
+              {endDate.toLocaleDateString("en-En", {
+                month: "short",
                 year: "numeric",
               })}
             </span>
@@ -113,7 +151,6 @@ const Methane = () => {
           <p className="text-green-700">12 months selected</p>
         </div>
       )}
-
       {showMonthPicker && (
         <MethaneMonthYearModal
           selectedMonth={selectedMonth}
@@ -122,34 +159,32 @@ const Methane = () => {
           defaultMonth={defaultMonth}
         />
       )}
-
       <Card>
         <CardHeader>
           <CardTitle>Methane Concentration</CardTitle>
           <CardDescription>
-            Atmospheric methane concentration over time
+            Atmospheric methane concentration over time (12-month period)
           </CardDescription>
         </CardHeader>
         <CardContent>
           <ResponsiveContainer width="100%" height={400}>
-            <LineChart data={filteredData}>
+            <BarChart
+              data={chartData}
+              margin={{ top: 20, right: 30, left: 10, bottom: 60 }}
+            >
               <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="date" tickFormatter={formatDate} />
+              <XAxis dataKey="date" interval={1} />
               <YAxis />
               <Tooltip content={CustomTooltip} />
-              <Line
-                type="monotone"
+              <Legend />
+              <Bar
                 dataKey="average"
-                stroke="#8884d8"
+                fill="#8884d8"
                 name="Average"
+                barSize={15}
               />
-              <Line
-                type="monotone"
-                dataKey="trend"
-                stroke="#82ca9d"
-                name="Trend"
-              />
-            </LineChart>
+              <Bar dataKey="trend" fill="#82ca9d" name="Trend" barSize={15} />
+            </BarChart>
           </ResponsiveContainer>
         </CardContent>
       </Card>

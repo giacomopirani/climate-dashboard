@@ -79,14 +79,14 @@ const CO2 = () => {
           onClick={() => setShowCalendar(true)}
         >
           <Calendar size={20} />
-          Select date range
+          Select Date range
         </button>
       </div>
 
       {startDate && endDate && (
         <div className="text-center text-gray-700">
           <p className="font-bold">
-            Range select:{" "}
+            Selected range:{" "}
             <span className="font-semibold text-orange-500">
               {startDate.toLocaleDateString()}
             </span>{" "}
