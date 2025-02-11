@@ -16,7 +16,7 @@ export default function Layout({ children }: LayoutProps) {
       <div className="hidden lg:block">
         <Sidebar />
       </div>
-      <div className="flex flex-col flex-grow w-full lg:pl-[60px]">
+      <div className="flex flex-col flex-grow w-full">
         <header className="bg-secondary-foreground fixed top-0 left-0 right-0 flex items-center p-2 pl-4 z-10">
           <div className="flex-grow" />
           <div className="flex items-center space-x-4">

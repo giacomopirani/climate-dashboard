@@ -40,7 +40,7 @@ const ArcticChart: React.FC<ArcticChartProps> = ({ data, annualMean }) => {
       <ResponsiveContainer width="100%" height={400}>
         <LineChart
           data={formattedData}
-          margin={{ top: 20, right: 20, left: 0, bottom: 40 }}
+          margin={{ top: 30, right: 20, left: -20, bottom: 40 }}
         >
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis dataKey="month" tick={{ fontSize: 12 }} />

@@ -68,7 +68,7 @@ const PolarIce: React.FC = () => {
     loadData();
   }, [loadData]);
 
-  const defaultMonth = new Date(2024, 0, 1);
+  const defaultMonth = new Date(1979, 0, 1);
   const [selectedMonth, setSelectedMonth] = useState<Date | null>(defaultMonth);
   const [showMonthPicker, setShowMonthPicker] = useState(false);
 
@@ -103,7 +103,7 @@ const PolarIce: React.FC = () => {
 
   return (
     <div className="space-y-6 mt-6">
-      <h1 className="text-3xl font-bold text-center">
+      <h1 className="text-3xl font-bold items-center">
         {metaData ? metaData.title : "Arctic Sea Ice Extent"}
       </h1>
       {metaData && <ArcticMetaData description={metaData} />}
