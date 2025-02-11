@@ -10,6 +10,7 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
+import { useWindowSize } from "../../hooks/use-window-size";
 import { formatDate } from "../../util/format-date";
 import { TemperatureData } from "../../util/types/temperature-types";
 import CustomTooltipTemperature from "../tooltip/custom-tooltip-temperature";
@@ -19,12 +20,14 @@ interface TemperatureChartProps {
 }
 
 const TemperatureChart: React.FC<TemperatureChartProps> = ({ data }) => {
+  const { width } = useWindowSize();
+  const chartHeight = width < 768 ? 300 : 400;
   const [highlightedPoint, setHighlightedPoint] = useState<string | null>(null);
 
   return (
     <ResponsiveContainer
       width="100%"
-      height={window.innerWidth < 768 ? 300 : 400}
+      height={chartHeight}
       className="min-h-[300px]"
     >
       <LineChart
@@ -36,9 +39,9 @@ const TemperatureChart: React.FC<TemperatureChartProps> = ({ data }) => {
         <XAxis
           dataKey="time"
           tickFormatter={formatDate}
-          tick={{ fontSize: window.innerWidth < 768 ? 10 : 12 }}
+          tick={{ fontSize: width < 768 ? 10 : 12 }}
         />
-        <YAxis tick={{ fontSize: window.innerWidth < 768 ? 10 : 12 }} />
+        <YAxis tick={{ fontSize: width < 768 ? 10 : 12 }} />
         <Tooltip content={<CustomTooltipTemperature />} />
         <Legend verticalAlign="top" height={36} />
         <Line
