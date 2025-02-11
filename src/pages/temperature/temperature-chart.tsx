@@ -25,6 +25,7 @@ const TemperatureChart: React.FC<TemperatureChartProps> = ({ data }) => {
     <ResponsiveContainer
       width="100%"
       height={window.innerWidth < 768 ? 300 : 400}
+      className="min-h-[300px]"
     >
       <LineChart
         data={data}
