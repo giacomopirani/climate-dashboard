@@ -12,19 +12,31 @@ import {
   ArcticDataResponse,
   ArcticMonthlyData,
 } from "@/util/types/arctic-data-types";
-import React, { useCallback, useEffect, useState } from "react";
+import { Calendar } from "lucide-react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { formatPolarIceDate } from "../../util/format-date";
-import ArcticChart, { ArcticChartData } from "./arctic-chart";
+import ArcticChart, {
+  ArcticChartData,
+  ExtendedArcticChartData,
+} from "./arctic-chart";
 import ArcticMetaData from "./arctic-metadata";
+import { PolarIceDateModal } from "./polar-ice-date-modal";
 
 const formatArcticData = (rawData: {
   [date: string]: ArcticMonthlyData;
-}): ArcticChartData[] => {
-  return Object.entries(rawData).map(([key, data]) => ({
-    month: formatPolarIceDate(key), // Usa la funzione per formattare la data
-    value: data.value,
-    anomaly: data.anom,
-  }));
+}): ExtendedArcticChartData[] => {
+  return Object.entries(rawData).map(([key, data]) => {
+    const year = parseInt(key.slice(0, 4), 10);
+    const month = parseInt(key.slice(4), 10) - 1;
+    const dateObj = new Date(year, month, 1);
+    console.log(`Parsed ${key} into date:`, dateObj);
+    return {
+      month: formatPolarIceDate(key),
+      value: data.value,
+      anomaly: data.anom,
+      dateObj,
+    };
+  });
 };
 
 const PolarIce: React.FC = () => {
@@ -43,7 +55,7 @@ const PolarIce: React.FC = () => {
       }
       const { description, data } = result.arcticData;
       setMetaData(description);
-      setChartData(formatArcticData(data)); // Applica la formattazione
+      setChartData(formatArcticData(data));
     } catch (err) {
       setError("Failed to load polar ice data");
       console.error(err);
@@ -55,6 +67,27 @@ const PolarIce: React.FC = () => {
   useEffect(() => {
     loadData();
   }, [loadData]);
+
+  const defaultMonth = new Date(1979, 0, 1);
+  const [selectedMonth, setSelectedMonth] = useState<Date | null>(defaultMonth);
+  const [showMonthPicker, setShowMonthPicker] = useState(false);
+
+  const filteredChartData = useMemo(() => {
+    if (!selectedMonth) return chartData;
+    const startDate = new Date(
+      selectedMonth.getFullYear(),
+      selectedMonth.getMonth(),
+      1
+    );
+    const endDate = new Date(
+      selectedMonth.getFullYear() + 1,
+      selectedMonth.getMonth(),
+      1
+    );
+    return chartData.filter((item) => {
+      return item.dateObj >= startDate && item.dateObj < endDate;
+    });
+  }, [chartData, selectedMonth]);
 
   if (isLoading) {
     return (
@@ -70,10 +103,56 @@ const PolarIce: React.FC = () => {
 
   return (
     <div className="space-y-6 mt-6">
-      <h1 className="text-3xl font-bold">
+      <h1 className="text-3xl font-bold text-center">
         {metaData ? metaData.title : "Arctic Sea Ice Extent"}
       </h1>
       {metaData && <ArcticMetaData description={metaData} />}
+
+      <div className="flex justify-center">
+        <button
+          className="flex items-center gap-2 px-4 py-2 bg-teal-500 text-white rounded hover:bg-teal-700"
+          onClick={() => setShowMonthPicker(true)}
+        >
+          <Calendar size={20} />
+          Select Month & Year
+        </button>
+      </div>
+
+      {selectedMonth && (
+        <div className="text-center text-gray-700">
+          <p className="font-bold">
+            Selected range:{" "}
+            <span className="font-semibold text-orange-500">
+              {selectedMonth.toLocaleDateString("en-EN", {
+                month: "short",
+                year: "numeric",
+              })}
+            </span>{" "}
+            -{" "}
+            <span className="font-semibold text-orange-500">
+              {new Date(
+                selectedMonth.getFullYear() + 1,
+                selectedMonth.getMonth(),
+                0
+              ).toLocaleDateString("en-EN", {
+                month: "short",
+                year: "numeric",
+              })}
+            </span>
+          </p>
+          <p className="text-green-700">12 months selected</p>
+        </div>
+      )}
+
+      {showMonthPicker && (
+        <PolarIceDateModal
+          selectedMonth={selectedMonth}
+          setSelectedMonth={setSelectedMonth}
+          onClose={() => setShowMonthPicker(false)}
+          defaultMonth={defaultMonth}
+        />
+      )}
+
       <Card>
         <CardHeader>
           <CardTitle>
@@ -85,7 +164,10 @@ const PolarIce: React.FC = () => {
         </CardHeader>
         <CardContent>
           {metaData && (
-            <ArcticChart data={chartData} annualMean={metaData.annualMean} />
+            <ArcticChart
+              data={filteredChartData}
+              annualMean={metaData.annualMean}
+            />
           )}
         </CardContent>
       </Card>

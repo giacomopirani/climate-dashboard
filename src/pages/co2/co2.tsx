@@ -106,7 +106,7 @@ const CO2 = () => {
           <div className="bg-white w-full max-w-md max-h-[80vh] md:rounded-lg overflow-y-auto">
             <header className="flex justify-between items-center px-4 py-3 border-b">
               <h2 className="text-xl font-bold text-black">
-                Select the date range
+                Select the Date range
               </h2>
               <button
                 onClick={() => setDateRange(defaultRange)}

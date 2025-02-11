@@ -6,7 +6,7 @@ interface ArcticMetaDataProps {
 }
 
 const ArcticMetaData: React.FC<ArcticMetaDataProps> = ({ description }) => (
-  <div className="mb-4">
+  <div className="mb-4 text-center">
     <p>
       <strong>Base Period:</strong> {description.basePeriod}
     </p>
