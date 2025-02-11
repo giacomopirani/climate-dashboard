@@ -68,7 +68,7 @@ const PolarIce: React.FC = () => {
     loadData();
   }, [loadData]);
 
-  const defaultMonth = new Date(1979, 0, 1);
+  const defaultMonth = new Date(2024, 0, 1);
   const [selectedMonth, setSelectedMonth] = useState<Date | null>(defaultMonth);
   const [showMonthPicker, setShowMonthPicker] = useState(false);
 
