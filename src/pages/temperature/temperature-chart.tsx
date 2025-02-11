@@ -32,7 +32,7 @@ const TemperatureChart: React.FC<TemperatureChartProps> = ({ data }) => {
     >
       <LineChart
         data={data}
-        margin={{ top: 20, right: 30, left: 10, bottom: 20 }}
+        margin={{ top: 20, right: 20, left: -28, bottom: 20 }}
         onMouseMove={(e) => setHighlightedPoint(e?.activeLabel ?? null)}
       >
         <CartesianGrid strokeDasharray="3 3" strokeOpacity={0.5} />
