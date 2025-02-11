@@ -8,7 +8,8 @@ import {
 import { api } from "@/lib/api";
 import { formatDate } from "@/util/format-date";
 import { MethaneData } from "@/util/types/methane-types";
-import { useEffect, useState } from "react";
+import { Calendar } from "lucide-react";
+import { useEffect, useMemo, useState } from "react";
 import {
   CartesianGrid,
   Line,
@@ -20,6 +21,7 @@ import {
 } from "recharts";
 import LoadingSpinner from "../../util/loading-spinner";
 import CustomTooltip from "../tooltip/custom-tooltip";
+import { MethaneMonthYearModal } from "./methane-month-year-modal";
 
 const Methane = () => {
   const [data, setData] = useState<MethaneData[]>([]);
@@ -46,9 +48,27 @@ const Methane = () => {
         setIsLoading(false);
       }
     };
-
     loadData();
   }, []);
+
+  const defaultMonth = new Date();
+  const [selectedMonth, setSelectedMonth] = useState<Date | null>(defaultMonth);
+  const [showMonthPicker, setShowMonthPicker] = useState(false);
+
+  const startDate = selectedMonth
+    ? new Date(selectedMonth.getFullYear(), selectedMonth.getMonth(), 1)
+    : null;
+  const endDate = selectedMonth
+    ? new Date(selectedMonth.getFullYear(), selectedMonth.getMonth() + 12, 0)
+    : null;
+
+  const filteredData = useMemo(() => {
+    if (!startDate || !endDate) return data;
+    return data.filter(({ date }) => {
+      const d = new Date(date);
+      return d >= startDate && d <= endDate;
+    });
+  }, [data, startDate, endDate]);
 
   if (isLoading)
     return (
@@ -61,6 +81,48 @@ const Methane = () => {
   return (
     <div className="space-y-6 mt-6">
       <h1 className="text-3xl font-bold">Methane Levels</h1>
+
+      <div className="flex justify-center">
+        <button
+          className="flex items-center gap-2 px-4 py-2 bg-teal-500 text-white rounded hover:bg-teal-700"
+          onClick={() => setShowMonthPicker(true)}
+        >
+          <Calendar size={20} />
+          Select Month & Year
+        </button>
+      </div>
+
+      {selectedMonth && startDate && endDate && (
+        <div className="text-center text-gray-700">
+          <p className="font-bold">
+            Selected range:{" "}
+            <span className="font-semibold text-orange-500">
+              {selectedMonth.toLocaleDateString("it-IT", {
+                month: "long",
+                year: "numeric",
+              })}
+            </span>{" "}
+            -{" "}
+            <span className="font-semibold text-orange-500">
+              {endDate.toLocaleDateString("it-IT", {
+                month: "long",
+                year: "numeric",
+              })}
+            </span>
+          </p>
+          <p className="text-green-700">12 months selected</p>
+        </div>
+      )}
+
+      {showMonthPicker && (
+        <MethaneMonthYearModal
+          selectedMonth={selectedMonth}
+          setSelectedMonth={setSelectedMonth}
+          onClose={() => setShowMonthPicker(false)}
+          defaultMonth={defaultMonth}
+        />
+      )}
+
       <Card>
         <CardHeader>
           <CardTitle>Methane Concentration</CardTitle>
@@ -70,7 +132,7 @@ const Methane = () => {
         </CardHeader>
         <CardContent>
           <ResponsiveContainer width="100%" height={400}>
-            <LineChart data={data}>
+            <LineChart data={filteredData}>
               <CartesianGrid strokeDasharray="3 3" />
               <XAxis dataKey="date" tickFormatter={formatDate} />
               <YAxis />
@@ -86,23 +148,6 @@ const Methane = () => {
                 dataKey="trend"
                 stroke="#82ca9d"
                 name="Trend"
-              />
-              <Line
-                type="monotone"
-                dataKey="averageUnc"
-                stroke="#ff7300"
-                name="Average Uncertainty"
-                dot={false}
-                strokeDasharray="5 5"
-              />
-
-              <Line
-                type="monotone"
-                dataKey="trendUnc"
-                stroke="#ff0000"
-                name="Trend Uncertainty"
-                dot={false}
-                strokeDasharray="5 5"
               />
             </LineChart>
           </ResponsiveContainer>

@@ -1,6 +1,16 @@
 export const formatDate = (dateStr: string): string => {
-  const [year] = dateStr.split(".");
-  return year && !isNaN(Number(year)) ? year : dateStr;
+  const parts = dateStr.split(".");
+  const year = Number(parts[0]);
+  const month = Number(parts[1]);
+  if (!isNaN(year) && !isNaN(month)) {
+    const date = new Date(year, month - 1);
+
+    return date.toLocaleDateString("en-US", {
+      month: "short",
+      year: "numeric",
+    });
+  }
+  return dateStr;
 };
 
 export const formatCO2Date = (
