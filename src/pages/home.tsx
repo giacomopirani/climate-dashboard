@@ -53,7 +53,7 @@ export default function Home() {
               <CardTitle>{feature.name}</CardTitle>
             </CardHeader>
             <CardContent>
-              <p className="text-sm text-muted-foreground">
+              <p className="text-sm text-muted-foreground pl-6 pb-4">
                 {feature.description}
               </p>
             </CardContent>
