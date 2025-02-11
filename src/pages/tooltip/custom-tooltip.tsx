@@ -1,10 +1,15 @@
 import React from "react";
 import { TooltipProps } from "recharts";
 
-const CustomTooltip: React.FC<TooltipProps<number, string>> = ({
+interface CustomTooltipProps extends TooltipProps<number, string> {
+  unit?: string;
+}
+
+const CustomTooltip: React.FC<CustomTooltipProps> = ({
   active,
   payload,
   label,
+  unit = "ppb",
 }) => {
   if (!active || !payload?.length) return null;
 
@@ -13,7 +18,10 @@ const CustomTooltip: React.FC<TooltipProps<number, string>> = ({
       <p className="text-sm font-bold text-black mb-1">{label}</p>
       {payload.map((entry, index) => (
         <p key={index} className="text-xs" style={{ color: entry.color }}>
-          {entry.name}: <strong>{entry.value}</strong>
+          {entry.name}:{" "}
+          <strong>
+            {entry.value} {unit}
+          </strong>
         </p>
       ))}
     </div>

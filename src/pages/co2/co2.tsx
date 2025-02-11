@@ -168,7 +168,7 @@ const CO2 = () => {
                   tickFormatter={(tick) => tick.toLocaleString()}
                   tick={{ fill: "#555", fontSize: 12 }}
                 />
-                <Tooltip content={CustomTooltip} />
+                <Tooltip content={<CustomTooltip unit="ppm" />} />
                 <Legend verticalAlign="top" height={36} />
                 <Bar
                   dataKey="trend"

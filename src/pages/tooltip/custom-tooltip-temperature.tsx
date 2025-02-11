@@ -19,10 +19,10 @@ const CustomTooltipTemperature: React.FC<CustomTooltipTemperatureProps> = ({
           Year: {labelValue ? parseFloat(labelValue).toFixed(0) : "N/A"}
         </p>
         <p className="text-xs text-black">
-          Station: <strong>{payload[0]?.value}</strong>
+          Station: <strong>{payload[0]?.value} °C</strong>
         </p>
         <p className="text-xs text-black">
-          Land: <strong>{payload[1]?.value}</strong>
+          Land: <strong>{payload[1]?.value} °C</strong>
         </p>
       </div>
     );
