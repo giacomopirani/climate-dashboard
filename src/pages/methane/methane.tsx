@@ -173,7 +173,7 @@ const Methane = () => {
               margin={{ top: 20, right: 30, left: 10, bottom: 60 }}
             >
               <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="date" interval={1} />
+              <XAxis dataKey="date" interval="preserveStartEnd" />
               <YAxis />
               <Tooltip content={CustomTooltip} />
               <Legend />
@@ -181,9 +181,9 @@ const Methane = () => {
                 dataKey="average"
                 fill="#8884d8"
                 name="Average"
-                barSize={15}
+                barSize={20}
               />
-              <Bar dataKey="trend" fill="#82ca9d" name="Trend" barSize={15} />
+              <Bar dataKey="trend" fill="#82ca9d" name="Trend" barSize={20} />
             </BarChart>
           </ResponsiveContainer>
         </CardContent>

@@ -59,3 +59,9 @@ export const formatPolarIceDate = (dateStr: string): string => {
 
   return `${monthNames[monthIndex]} ${year}`;
 };
+
+export const convertTimeStringToYear = (timeStr: string): string => {
+  const time = Number(timeStr);
+  const year = Math.floor(time);
+  return year.toString();
+};

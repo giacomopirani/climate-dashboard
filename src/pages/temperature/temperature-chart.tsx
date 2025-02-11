@@ -11,7 +11,7 @@ import {
   YAxis,
 } from "recharts";
 import { useWindowSize } from "../../hooks/use-window-size";
-import { formatDate } from "../../util/format-date";
+import { convertTimeStringToYear } from "../../util/format-date";
 import { TemperatureData } from "../../util/types/temperature-types";
 import CustomTooltipTemperature from "../tooltip/custom-tooltip-temperature";
 
@@ -38,8 +38,9 @@ const TemperatureChart: React.FC<TemperatureChartProps> = ({ data }) => {
         <CartesianGrid strokeDasharray="3 3" strokeOpacity={0.5} />
         <XAxis
           dataKey="time"
-          tickFormatter={formatDate}
+          tickFormatter={(timeStr: string) => convertTimeStringToYear(timeStr)}
           tick={{ fontSize: width < 768 ? 10 : 12 }}
+          interval="preserveStartEnd"
         />
         <YAxis tick={{ fontSize: width < 768 ? 10 : 12 }} />
         <Tooltip content={<CustomTooltipTemperature />} />
