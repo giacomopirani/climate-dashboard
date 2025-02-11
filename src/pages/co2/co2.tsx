@@ -103,7 +103,6 @@ const CO2 = () => {
 
       {showCalendar && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-          {/* Modifica qui: usa max-h-[80vh] al posto di h-full */}
           <div className="bg-white w-full max-w-md max-h-[80vh] md:rounded-lg overflow-y-auto">
             <header className="flex justify-between items-center px-4 py-3 border-b">
               <h2 className="text-xl font-bold text-black">
@@ -176,14 +175,14 @@ const CO2 = () => {
                   fill="#8884d8"
                   name="Trend"
                   animationDuration={800}
-                  barSize={35}
+                  barSize={15}
                 />
                 <Bar
                   dataKey="cycle"
                   fill="#82ca9d"
                   name="Cycle"
                   animationDuration={800}
-                  barSize={35}
+                  barSize={15}
                 />
               </BarChart>
             </ResponsiveContainer>
