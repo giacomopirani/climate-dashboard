@@ -26,17 +26,17 @@ export function MethaneMonthYearModal({
             Reset
           </button>
         </header>
-
-        <main className="flex-grow p-4 flex justify-center ">
+        <main className="flex-grow p-4 flex justify-center">
           <DatePicker
             selected={selectedMonth}
             onChange={(date: Date | null) => setSelectedMonth(date)}
             showMonthYearPicker
             dateFormat="MM/yyyy"
             className="w-full border p-2 rounded text-black"
+            minDate={new Date(1984, 10, 1)}
+            maxDate={new Date()}
           />
         </main>
-
         <footer className="px-4 py-3 border-t">
           <button
             onClick={onClose}
