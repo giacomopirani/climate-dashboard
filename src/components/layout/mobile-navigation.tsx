@@ -13,7 +13,7 @@ export function MobileNavigation() {
   const location = useLocation();
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 bg-primary text-primary-foreground border-t lg:hidden z-50">
+    <div className="fixed bottom-0 left-0 right-0 bg-primary text-primary-foreground border-t xl:hidden z-50">
       <nav className="flex justify-between items-center h-14">
         {navigation.map((item) => {
           const isActive = location.pathname === item.href;
