@@ -11,10 +11,11 @@ import { useMemo, useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import {
-  Bar,
-  BarChart,
+  Brush,
   CartesianGrid,
   Legend,
+  Line,
+  LineChart,
   ResponsiveContainer,
   Tooltip,
   XAxis,
@@ -47,7 +48,7 @@ const CO2 = () => {
     return (
       <div className="flex justify-center items-center h-screen">
         <p className="text-red-500 text-center">
-          The start date shall not be later than the end date.
+          The start date cannot be later than the end date.
         </p>
       </div>
     );
@@ -69,6 +70,11 @@ const CO2 = () => {
         ) + 1
       : 0;
 
+  const allValues = filteredData.flatMap((d) => [d.trend, d.cycle]);
+  const yMin = Math.min(...allValues);
+  const yMax = Math.max(...allValues);
+  const offset = (yMax - yMin) * 0.1;
+
   return (
     <div className="space-y-6 mt-6 relative">
       <h1 className="text-3xl font-bold text-center">CO2 Levels</h1>
@@ -79,7 +85,7 @@ const CO2 = () => {
           onClick={() => setShowCalendar(true)}
         >
           <Calendar size={20} />
-          Select Date range
+          Select Date Range
         </button>
       </div>
 
@@ -106,7 +112,7 @@ const CO2 = () => {
           <div className="bg-white w-full max-w-md max-h-[80vh] md:rounded-lg overflow-y-auto">
             <header className="flex justify-between items-center px-4 py-3 border-b">
               <h2 className="text-xl font-bold text-black">
-                Select the Date range
+                Select Date Range
               </h2>
               <button
                 onClick={() => setDateRange(defaultRange)}
@@ -142,19 +148,19 @@ const CO2 = () => {
 
       {filteredData.length === 0 ? (
         <div className="text-center text-red-700 font-normal mt-8">
-          No data available for this interval.
+          No data available for this range.
         </div>
       ) : (
         <Card>
           <CardHeader>
             <CardTitle>CO2 Concentration</CardTitle>
             <CardDescription>
-              Atmospheric CO2 concentration over time
+              Atmospheric CO2 concentration over time.
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <ResponsiveContainer width="100%" height={400}>
-              <BarChart data={filteredData}>
+            <ResponsiveContainer width="95%" height={400}>
+              <LineChart data={filteredData}>
                 <CartesianGrid strokeDasharray="3 3" strokeOpacity={0.5} />
                 <XAxis
                   dataKey="date"
@@ -165,27 +171,43 @@ const CO2 = () => {
                   tick={{ fill: "#555", fontSize: 12 }}
                 />
                 <YAxis
-                  tickFormatter={(tick) => tick.toLocaleString()}
+                  domain={[yMin - offset, yMax + offset]}
+                  tickFormatter={(tick) => Math.trunc(tick).toLocaleString()}
                   tick={{ fill: "#555", fontSize: 12 }}
                 />
                 <Tooltip content={<CustomTooltip unit="ppm" />} />
                 <Legend verticalAlign="top" height={36} />
-                <Bar
+                <Line
+                  type="monotone"
                   dataKey="trend"
-                  fill="#8884d8"
+                  stroke="#8884d8"
                   name="Trend"
-                  animationDuration={800}
-                  barSize={15}
+                  strokeWidth={2}
+                  dot={false}
                 />
-                <Bar
+                <Line
+                  type="monotone"
                   dataKey="cycle"
-                  fill="#82ca9d"
+                  stroke="#82ca9d"
                   name="Cycle"
-                  animationDuration={800}
-                  barSize={15}
+                  strokeWidth={2}
+                  dot={false}
                 />
-              </BarChart>
+
+                <Brush
+                  dataKey="date"
+                  height={50}
+                  stroke="#8884d8"
+                  travellerWidth={20}
+                  fill="rgba(136, 132, 216, 0.2)"
+                  tickFormatter={(date) => new Date(date).toLocaleDateString()}
+                  className="pr-5"
+                />
+              </LineChart>
             </ResponsiveContainer>
+            <p className="text-center text-sm text-orange-600 mt-2">
+              ← Use the Brush above to zoom in on your range of interest →
+            </p>
           </CardContent>
         </Card>
       )}
