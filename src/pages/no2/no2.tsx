@@ -102,7 +102,7 @@ const NO2 = () => {
     loadData();
   }, []);
 
-  const defaultMonth = new Date(2023, 10, 1);
+  const defaultMonth = new Date(2023, 11, 1);
   const [selectedMonth, setSelectedMonth] = useState<Date | null>(defaultMonth);
   const [showMonthPicker, setShowMonthPicker] = useState(false);
 

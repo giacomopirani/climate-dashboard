@@ -12,9 +12,11 @@ import { Calendar } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 import {
   Bar,
-  BarChart,
   CartesianGrid,
+  ComposedChart,
+  ErrorBar,
   Legend,
+  Line,
   ResponsiveContainer,
   Tooltip,
   XAxis,
@@ -26,18 +28,30 @@ import { MethaneMonthYearModal } from "./methane-month-year-modal";
 
 interface ExtendedMethaneData extends MethaneData {
   dateObj: Date;
+  average: number;
+  trend: number;
+  averageUnc: number;
+  trendUnc: number;
+}
+
+interface ChartData {
+  date: string;
+  average: number;
+  trend: number;
+  averageUnc: number;
+  trendUnc: number;
 }
 
 const generateChartData = (
   start: Date,
   end: Date,
   data: ExtendedMethaneData[]
-): Array<{ date: string; average: number; trend: number }> => {
+): ChartData[] => {
   const totalMonths =
     (end.getFullYear() - start.getFullYear()) * 12 +
     (end.getMonth() - start.getMonth()) +
     1;
-  const result = [];
+  const result: ChartData[] = [];
   for (let i = 0; i < totalMonths; i++) {
     const current = new Date(start.getFullYear(), start.getMonth() + i, 1);
     const label = formatDate(
@@ -48,11 +62,23 @@ const generateChartData = (
         d.dateObj.getFullYear() === current.getFullYear() &&
         d.dateObj.getMonth() === current.getMonth()
     );
-    result.push({
-      date: label,
-      average: record ? record.average : 0,
-      trend: record ? record.trend : 0,
-    });
+    if (record) {
+      result.push({
+        date: label,
+        average: record.average,
+        trend: record.trend,
+        averageUnc: record.averageUnc,
+        trendUnc: record.trendUnc,
+      });
+    } else {
+      result.push({
+        date: label,
+        average: 0,
+        trend: 0,
+        averageUnc: 0,
+        trendUnc: 0,
+      });
+    }
   }
   return result;
 };
@@ -110,6 +136,14 @@ const Methane = () => {
     return generateChartData(startDate, endDate, data);
   }, [startDate, endDate, data]);
 
+  const { yMin, yMax, offset } = useMemo(() => {
+    const allValues = chartData.flatMap((item) => [item.average, item.trend]);
+    const min = Math.min(...allValues);
+    const max = Math.max(...allValues);
+    const off = (max - min) * 0.1;
+    return { yMin: min, yMax: max, offset: off };
+  }, [chartData]);
+
   if (isLoading)
     return (
       <div className="flex justify-center items-center h-screen">
@@ -127,7 +161,7 @@ const Methane = () => {
           onClick={() => setShowMonthPicker(true)}
         >
           <Calendar size={20} />
-          Select Month & Year
+          Select Month &amp; Year
         </button>
       </div>
       {selectedMonth && startDate && endDate && (
@@ -168,23 +202,34 @@ const Methane = () => {
         </CardHeader>
         <CardContent>
           <ResponsiveContainer width="100%" height={400}>
-            <BarChart
+            <ComposedChart
               data={chartData}
               margin={{ top: 20, right: 30, left: 10, bottom: 60 }}
             >
+              <defs>
+                <linearGradient id="colorAverage" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="5%" stopColor="#8884d8" stopOpacity={0.8} />
+                  <stop offset="95%" stopColor="#8884d8" stopOpacity={0.2} />
+                </linearGradient>
+              </defs>
               <CartesianGrid strokeDasharray="3 3" />
               <XAxis dataKey="date" interval="preserveStartEnd" />
-              <YAxis />
-              <Tooltip content={CustomTooltip} />
+              <YAxis domain={[yMin - offset, yMax + offset]} />
+              <Tooltip content={<CustomTooltip />} />
               <Legend />
-              <Bar
-                dataKey="average"
-                fill="#8884d8"
-                name="Average"
-                barSize={20}
-              />
-              <Bar dataKey="trend" fill="#82ca9d" name="Trend" barSize={20} />
-            </BarChart>
+              <Bar dataKey="average" name="Average" barSize={20} fill="#A15BE4">
+                <ErrorBar dataKey="averageUnc" stroke="#ff7300" width={4} />
+              </Bar>
+              <Line
+                dataKey="trend"
+                name="Trend"
+                stroke="#82ca9d"
+                strokeWidth={2}
+                dot={{ fill: "#82ca9d", stroke: "#fff", r: 3 }}
+              >
+                <ErrorBar dataKey="trendUnc" stroke="#ff7300" width={4} />
+              </Line>
+            </ComposedChart>
           </ResponsiveContainer>
         </CardContent>
       </Card>
