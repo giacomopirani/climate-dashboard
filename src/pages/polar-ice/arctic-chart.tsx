@@ -62,12 +62,7 @@ const ArcticChart: React.FC<ArcticChartProps> = ({ data, annualMean }) => {
             name="Anomaly"
             animationDuration={800}
           />
-          <ReferenceLine
-            y={annualMean}
-            label={`Annual Mean: ${annualMean}`}
-            stroke="red"
-            strokeDasharray="3 3"
-          />
+          <ReferenceLine y={annualMean} stroke="red" strokeDasharray="3 3" />
         </LineChart>
       </ResponsiveContainer>
     </div>
