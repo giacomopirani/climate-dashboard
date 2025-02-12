@@ -29,7 +29,7 @@ const TemperatureChart: React.FC<TemperatureChartProps> = ({ data }) => {
     <ResponsiveContainer width="100%" height={400}>
       <LineChart
         data={data}
-        margin={{ top: 20, right: 30, left: 10, bottom: 30 }}
+        margin={{ top: 20, right: 30, left: -25, bottom: 30 }}
       >
         <CartesianGrid strokeDasharray="3 3" />
         <XAxis

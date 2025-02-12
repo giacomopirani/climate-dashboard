@@ -37,7 +37,7 @@ const ArcticChart: React.FC<ArcticChartProps> = ({ data, annualMean }) => {
 
   return (
     <div>
-      <ResponsiveContainer width="100%" height={400}>
+      <ResponsiveContainer width="99%" height={400}>
         <LineChart
           data={formattedData}
           margin={{ top: 30, right: 20, left: -20, bottom: 40 }}

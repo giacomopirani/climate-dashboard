@@ -31,10 +31,10 @@ const NO2Chart: React.FC<NO2ChartProps> = ({ data }) => {
   const offset = (maxVal - minVal) * 0.1;
 
   return (
-    <ResponsiveContainer width="100%" height={400}>
+    <ResponsiveContainer width="99%" height={400}>
       <LineChart
         data={data}
-        margin={{ top: 40, right: 30, left: 10, bottom: 30 }}
+        margin={{ top: 40, right: 30, left: -10, bottom: 30 }}
       >
         <CartesianGrid strokeDasharray="3 3" />
         <XAxis dataKey="date" interval="preserveStartEnd" />

@@ -29,7 +29,6 @@ const formatArcticData = (rawData: {
     const year = parseInt(key.slice(0, 4), 10);
     const month = parseInt(key.slice(4), 10) - 1;
     const dateObj = new Date(year, month, 1);
-    console.log(`Parsed ${key} into date:`, dateObj);
     return {
       month: formatPolarIceDate(key),
       value: data.value,
