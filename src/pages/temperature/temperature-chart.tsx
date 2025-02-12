@@ -1,5 +1,7 @@
-import React, { useState } from "react";
+import { TemperatureData } from "@/util/types/temperature-types";
+import React from "react";
 import {
+  Brush,
   CartesianGrid,
   Legend,
   Line,
@@ -10,69 +12,67 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
-import { useWindowSize } from "../../hooks/use-window-size";
-import { convertTimeStringToYear } from "../../util/format-date";
-import { TemperatureData } from "../../util/types/temperature-types";
-import CustomTooltipTemperature from "../tooltip/custom-tooltip-temperature";
+import CustomTooltip from "../tooltip/custom-tooltip-temperature";
 
 interface TemperatureChartProps {
   data: TemperatureData[];
 }
 
 const TemperatureChart: React.FC<TemperatureChartProps> = ({ data }) => {
-  const { width } = useWindowSize();
-  const chartHeight = width < 768 ? 300 : 400;
-  const [highlightedPoint, setHighlightedPoint] = useState<string | null>(null);
+  const stationValues = data.map((d) => d.station);
+  const landValues = data.map((d) => d.land);
+  const overallMin = Math.min(...stationValues, ...landValues);
+  const overallMax = Math.max(...stationValues, ...landValues);
+  const offset = (overallMax - overallMin) * 0.1;
 
   return (
-    <ResponsiveContainer
-      width="100%"
-      height={chartHeight}
-      className="min-h-[300px]"
-    >
+    <ResponsiveContainer width="100%" height={400}>
       <LineChart
         data={data}
-        margin={{ top: 20, right: 20, left: -28, bottom: 20 }}
-        onMouseMove={(e) => setHighlightedPoint(e?.activeLabel ?? null)}
+        margin={{ top: 20, right: 30, left: 10, bottom: 30 }}
       >
-        <CartesianGrid strokeDasharray="3 3" strokeOpacity={0.5} />
+        <CartesianGrid strokeDasharray="3 3" />
         <XAxis
           dataKey="time"
-          tickFormatter={(timeStr: string) => convertTimeStringToYear(timeStr)}
-          tick={{ fontSize: width < 768 ? 10 : 12 }}
-          interval="preserveStartEnd"
+          tickFormatter={(time) => `${new Date(time).getFullYear()}`}
+          minTickGap={20}
         />
-        <YAxis tick={{ fontSize: width < 768 ? 10 : 12 }} />
-        <Tooltip content={<CustomTooltipTemperature />} />
-        <Legend verticalAlign="top" height={36} />
+        <YAxis
+          domain={[overallMin - offset, overallMax + offset]}
+          tickFormatter={(tick) => Math.trunc(tick).toLocaleString()}
+        />
+        <Tooltip content={<CustomTooltip />} />
+        <Legend verticalAlign="top" align="center" />
+
+        <ReferenceLine y={0} stroke="#000" strokeDasharray="3 3" />
+
         <Line
           type="monotone"
           dataKey="station"
-          stroke="#6a5acd"
-          strokeWidth={2.5}
           name="Station"
-          activeDot={{ r: 6, stroke: "white", strokeWidth: 2 }}
-          dot={{ r: 3, fill: "#6a5acd", stroke: "white", strokeWidth: 1 }}
-          animationDuration={600}
+          stroke="#8884d8"
+          strokeWidth={2}
+          dot={{ r: 4 }}
+          activeDot={{ r: 6 }}
         />
+
         <Line
           type="monotone"
           dataKey="land"
-          stroke="#32cd32"
-          strokeWidth={2.5}
           name="Land"
-          activeDot={{ r: 6, stroke: "white", strokeWidth: 2 }}
-          dot={{ r: 3, fill: "#32cd32", stroke: "white", strokeWidth: 1 }}
-          animationDuration={600}
+          stroke="#82ca9d"
+          strokeWidth={2}
+          dot={{ r: 4 }}
+          activeDot={{ r: 6 }}
         />
-        {highlightedPoint && (
-          <ReferenceLine
-            x={highlightedPoint}
-            stroke="red"
-            strokeDasharray="3 3"
-            label="Focus"
-          />
-        )}
+
+        <Brush
+          dataKey="time"
+          height={50}
+          stroke="#8884d8"
+          travellerWidth={15}
+          tickFormatter={(time) => `${new Date(time).getFullYear()}`}
+        />
       </LineChart>
     </ResponsiveContainer>
   );

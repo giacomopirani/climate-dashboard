@@ -206,7 +206,7 @@ const CO2 = () => {
               </LineChart>
             </ResponsiveContainer>
             <p className="text-center text-sm text-orange-600 mt-2">
-              ← Use the Brush above to zoom in on your range of interest →
+              ← Zoom with Brush →
             </p>
           </CardContent>
         </Card>

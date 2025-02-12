@@ -14,7 +14,6 @@ import { TemperatureYearRangeModal } from "./temperature-year-range-modal";
 
 const Temperature: React.FC = () => {
   const MAX_ALLOWED_YEAR = 2024;
-
   const currentYear = new Date().getFullYear();
   const defaultEndYear =
     currentYear > MAX_ALLOWED_YEAR ? MAX_ALLOWED_YEAR : currentYear;
@@ -26,7 +25,6 @@ const Temperature: React.FC = () => {
   const [yearRange, setYearRange] =
     useState<[Date | null, Date | null]>(defaultRange);
   const [startYear, endYear] = yearRange;
-
   const [showYearPicker, setShowYearPicker] = useState(false);
 
   const { data, isLoading, error } = useTemperatureData();
@@ -80,7 +78,7 @@ const Temperature: React.FC = () => {
           className="flex items-center gap-2 px-4 py-2 bg-teal-500 text-white rounded hover:bg-teal-700"
         >
           <Calendar size={20} />
-          Select Year range
+          Select Year Range
         </button>
       </div>
 
@@ -123,6 +121,9 @@ const Temperature: React.FC = () => {
         <CardContent>
           <TemperatureChart data={filteredData} />
         </CardContent>
+        <p className="text-center text-sm text-orange-600">
+          ← Zoom with Brush →
+        </p>
       </Card>
     </div>
   );

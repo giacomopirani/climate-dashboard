@@ -2,7 +2,7 @@ import { Github, Linkedin } from "lucide-react";
 
 const Footer = () => {
   return (
-    <footer className="text-foreground text-center py-4">
+    <footer className="text-foreground text-center py-4 mb-8">
       <p className="mb-2">
         &copy; 2025 Climate Dashboard. <br /> Developed by{" "}
         <strong>Giacomo Pirani</strong> as a final project for{" "}
@@ -10,7 +10,7 @@ const Footer = () => {
           href="https://www.start2impact.it/master/"
           target="_blank"
           rel="noopener noreferrer"
-          className="text-primary hover:underline"
+          className="text-green-700 font-semibold hover:underline"
         >
           Start2Impact University
         </a>

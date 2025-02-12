@@ -214,7 +214,10 @@ const Methane = () => {
               </defs>
               <CartesianGrid strokeDasharray="3 3" />
               <XAxis dataKey="date" interval="preserveStartEnd" />
-              <YAxis domain={[yMin - offset, yMax + offset]} />
+              <YAxis
+                domain={[yMin - offset, yMax + offset]}
+                tickFormatter={(tick) => Math.trunc(tick).toLocaleString()}
+              />
               <Tooltip content={<CustomTooltip />} />
               <Legend />
               <Bar dataKey="average" name="Average" barSize={20} fill="#A15BE4">
