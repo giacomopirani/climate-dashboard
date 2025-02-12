@@ -169,6 +169,7 @@ const CO2 = () => {
                   }
                   interval={30}
                   tick={{ fill: "#555", fontSize: 12 }}
+                  tickMargin={10}
                 />
                 <YAxis
                   domain={[yMin - offset, yMax + offset]}
@@ -201,7 +202,6 @@ const CO2 = () => {
                   travellerWidth={20}
                   fill="rgba(136, 132, 216, 0.2)"
                   tickFormatter={(date) => new Date(date).toLocaleDateString()}
-                  className="pr-5"
                 />
               </LineChart>
             </ResponsiveContainer>

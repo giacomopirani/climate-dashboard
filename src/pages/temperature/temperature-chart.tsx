@@ -12,6 +12,7 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
+
 import CustomTooltip from "../tooltip/custom-tooltip-temperature";
 
 interface TemperatureChartProps {
@@ -35,7 +36,8 @@ const TemperatureChart: React.FC<TemperatureChartProps> = ({ data }) => {
         <XAxis
           dataKey="time"
           tickFormatter={(time) => `${new Date(time).getFullYear()}`}
-          minTickGap={20}
+          minTickGap={10}
+          tickMargin={10}
         />
         <YAxis
           domain={[overallMin - offset, overallMax + offset]}

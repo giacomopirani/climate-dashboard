@@ -213,7 +213,11 @@ const Methane = () => {
                 </linearGradient>
               </defs>
               <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="date" interval="preserveStartEnd" />
+              <XAxis
+                dataKey="date"
+                interval="preserveStartEnd"
+                tickMargin={10}
+              />
               <YAxis
                 domain={[yMin - offset, yMax + offset]}
                 tickFormatter={(tick) => Math.trunc(tick).toLocaleString()}

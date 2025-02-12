@@ -37,7 +37,7 @@ const NO2Chart: React.FC<NO2ChartProps> = ({ data }) => {
         margin={{ top: 40, right: 30, left: -10, bottom: 30 }}
       >
         <CartesianGrid strokeDasharray="3 3" />
-        <XAxis dataKey="date" interval="preserveStartEnd" />
+        <XAxis dataKey="date" interval="preserveStartEnd" tickMargin={10} />
         <YAxis
           domain={[minVal - offset, maxVal + offset]}
           tickFormatter={(tick) => Math.trunc(tick).toLocaleString()}

@@ -43,7 +43,7 @@ const ArcticChart: React.FC<ArcticChartProps> = ({ data, annualMean }) => {
           margin={{ top: 30, right: 20, left: -20, bottom: 40 }}
         >
           <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="month" tick={{ fontSize: 12 }} />
+          <XAxis dataKey="month" tick={{ fontSize: 12 }} tickMargin={10} />
           <YAxis tick={{ fontSize: 12 }} />
           <Tooltip content={<CustomTooltip />} />
           <Legend verticalAlign="top" height={36} />

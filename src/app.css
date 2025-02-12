@@ -119,3 +119,7 @@ html {
   background-color: #8884d8;
   color: white;
 }
+
+.recharts-brush {
+  transform: translateY(10px);
+}
