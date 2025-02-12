@@ -11,7 +11,6 @@ import { useMemo, useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import {
-  Brush,
   CartesianGrid,
   Legend,
   Line,
@@ -194,20 +193,8 @@ const CO2 = () => {
                   strokeWidth={2}
                   dot={false}
                 />
-
-                <Brush
-                  dataKey="date"
-                  height={50}
-                  stroke="#8884d8"
-                  travellerWidth={20}
-                  fill="rgba(136, 132, 216, 0.2)"
-                  tickFormatter={(date) => new Date(date).toLocaleDateString()}
-                />
               </LineChart>
             </ResponsiveContainer>
-            <p className="text-center text-sm text-orange-600 mt-6">
-              ← Zoom with Brush →
-            </p>
           </CardContent>
         </Card>
       )}
