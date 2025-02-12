@@ -102,7 +102,7 @@ const PolarIce: React.FC = () => {
 
   return (
     <div className="space-y-6 mt-6">
-      <h1 className="text-3xl font-bold items-center">
+      <h1 className="text-3xl font-bold text-center">
         {metaData ? metaData.title : "Arctic Sea Ice Extent"}
       </h1>
       {metaData && <ArcticMetaData description={metaData} />}
