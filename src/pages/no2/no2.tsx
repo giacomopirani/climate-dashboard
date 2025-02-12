@@ -11,17 +11,8 @@ import LoadingSpinner from "@/util/loading-spinner";
 import { NO2Data } from "@/util/types/no2-types";
 import { Calendar } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
-import {
-  CartesianGrid,
-  Legend,
-  Line,
-  LineChart,
-  ResponsiveContainer,
-  Tooltip,
-  XAxis,
-  YAxis,
-} from "recharts";
-import CustomTooltip from "../tooltip/custom-tooltip";
+import NO2Chart from "./no2-chart";
+
 import { NO2MonthYearModal } from "./no2-month-year-modal";
 
 interface ExtendedNO2Data extends NO2Data {
@@ -69,6 +60,7 @@ const NO2 = () => {
   const [data, setData] = useState<ExtendedNO2Data[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+
   useEffect(() => {
     const loadData = async () => {
       try {
@@ -138,7 +130,7 @@ const NO2 = () => {
           onClick={() => setShowMonthPicker(true)}
         >
           <Calendar size={20} />
-          Select Month & Year
+          Select Month &amp; Year
         </button>
       </div>
       {selectedMonth && startDate && endDate && (
@@ -178,47 +170,11 @@ const NO2 = () => {
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <ResponsiveContainer width="100%" height={400}>
-            <LineChart
-              data={chartData}
-              margin={{ top: 20, right: 30, left: 10, bottom: 60 }}
-            >
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="date" interval="preserveStartEnd" />
-              <YAxis />
-              <Tooltip content={CustomTooltip} />
-              <Legend />
-              <Line
-                type="monotone"
-                dataKey="average"
-                stroke="#8884d8"
-                name="Average"
-              />
-              <Line
-                type="monotone"
-                dataKey="trend"
-                stroke="#82ca9d"
-                name="Trend"
-              />
-              <Line
-                type="monotone"
-                dataKey="averageUnc"
-                stroke="#ff7300"
-                name="Average Uncertainty"
-                dot={false}
-                strokeDasharray="5 5"
-              />
-              <Line
-                type="monotone"
-                dataKey="trendUnc"
-                stroke="#ff0000"
-                name="Trend Uncertainty"
-                dot={false}
-                strokeDasharray="5 5"
-              />
-            </LineChart>
-          </ResponsiveContainer>
+          <NO2Chart data={chartData} />
         </CardContent>
+        <p className="text-center text-sm text-orange-600">
+          ← Zoom with Brush →
+        </p>
       </Card>
     </div>
   );

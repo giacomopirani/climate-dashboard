@@ -118,7 +118,7 @@ const Temperature: React.FC = () => {
             1951-1980 average.
           </CardDescription>
         </CardHeader>
-        <CardContent>
+        <CardContent className="min-h-[400px]">
           <TemperatureChart data={filteredData} />
         </CardContent>
         <p className="text-center text-sm text-orange-600">
