@@ -45,6 +45,7 @@ const features = [
 export default function Home() {
   return (
     <div className="flex flex-col items-center mt-6">
+      <h1> Norman</h1>
       <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 max-w-[1200px] w-full px-4">
         {features.map((feature) => (
           <Card key={feature.name} className="flex flex-col border shadow-lg">
