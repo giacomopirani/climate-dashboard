@@ -76,9 +76,9 @@ const CO2 = () => {
 
   return (
     <div className="space-y-6 mt-6 relative">
-      <h1 className="text-3xl font-bold text-center">CO2 Levels</h1>
+      <h1 className="text-3xl font-bold">CO2 Levels</h1>
 
-      <div className="flex justify-center">
+      <div className="flex">
         <button
           className="flex items-center gap-2 px-4 py-2 bg-teal-500 text-white rounded hover:bg-teal-700"
           onClick={() => setShowCalendar(true)}
@@ -89,7 +89,7 @@ const CO2 = () => {
       </div>
 
       {startDate && endDate && (
-        <div className="text-center text-gray-700">
+        <div className="text-gray-700">
           <p className="font-bold">
             Selected range:{" "}
             <span className="font-semibold text-orange-500">
