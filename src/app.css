@@ -123,3 +123,22 @@ html {
 .recharts-brush {
   transform: translateY(15px);
 }
+
+@keyframes brightnessPulse {
+  0% {
+    filter: brightness(100%);
+    transform: scale(1);
+  }
+  50% {
+    filter: brightness(140%);
+    transform: scale(1.03);
+  }
+  100% {
+    filter: brightness(100%);
+    transform: scale(1);
+  }
+}
+
+.animate-brightness-pulse {
+  animation: brightnessPulse 3s infinite ease-in-out;
+}

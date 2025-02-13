@@ -34,7 +34,7 @@ export default function Sidebar() {
       <div className="flex items-center justify-between h-16 px-4 mt-14">
         <button
           onClick={() => setIsCollapsed(!isCollapsed)}
-          className="ml-auto p-2 hover:text-teal-700 cursor-pointer transition-colors duration-300"
+          className="ml-auto p-2 hover:text-indigo-700 cursor-pointer transition-colors duration-300"
           title={isCollapsed ? "Expand sidebar" : "Collapse sidebar"}
           aria-label={isCollapsed ? "Expand sidebar" : "Collapse sidebar"}
         >
