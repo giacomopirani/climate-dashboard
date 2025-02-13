@@ -102,12 +102,12 @@ const PolarIce: React.FC = () => {
 
   return (
     <div className="space-y-6 mt-6">
-      <h1 className="text-3xl font-bold text-center">
+      <h1 className="text-3xl font-bold">
         {metaData ? metaData.title : "Arctic Sea Ice Extent"}
       </h1>
       {metaData && <ArcticMetaData description={metaData} />}
 
-      <div className="flex justify-center">
+      <div className="flex">
         <button
           className="flex items-center gap-2 px-4 py-2 bg-teal-500 text-white rounded hover:bg-teal-700"
           onClick={() => setShowMonthPicker(true)}
@@ -118,7 +118,7 @@ const PolarIce: React.FC = () => {
       </div>
 
       {selectedMonth && (
-        <div className="text-center text-gray-700">
+        <div className=" text-gray-700">
           <p className="font-bold">
             Selected range:{" "}
             <span className="font-semibold text-orange-500">
