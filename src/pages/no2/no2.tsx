@@ -123,8 +123,8 @@ const NO2 = () => {
 
   return (
     <div className="space-y-6 mt-6">
-      <h1 className="text-3xl font-bold text-center">NO₂ Levels</h1>
-      <div className="flex justify-center">
+      <h1 className="text-3xl font-bold">NO₂ Levels</h1>
+      <div className="flex">
         <button
           className="flex items-center gap-2 px-4 py-2 bg-teal-500 text-white rounded hover:bg-teal-700"
           onClick={() => setShowMonthPicker(true)}
@@ -134,7 +134,7 @@ const NO2 = () => {
         </button>
       </div>
       {selectedMonth && startDate && endDate && (
-        <div className="text-center text-gray-700">
+        <div className="text-gray-700">
           <p className="font-bold">
             Selected range:{" "}
             <span className="font-semibold text-orange-500">
