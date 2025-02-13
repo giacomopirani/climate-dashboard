@@ -39,7 +39,7 @@ export default function Layout({ children }: LayoutProps) {
           <div className="flex-grow" />
           <div className="flex items-center space-x-4">
             <Link to="/">
-              <Home className="h-8 w-8 cursor-pointer text-white dark:text-blue-950 hover:text-teal-700 dark:hover:text-teal-700" />
+              <Home className="h-8 w-8 cursor-pointer text-white dark:text-blue-950 hover:text-indigo-700 dark:hover:text-indigo-700" />
             </Link>
             <ThemeToggle />
           </div>

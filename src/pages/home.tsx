@@ -44,21 +44,49 @@ const features = [
 
 export default function Home() {
   return (
-    <div className="flex flex-col items-center mt-6">
-      <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 max-w-[1200px] w-full px-4">
+    <div className="flex flex-col items-center mt-10 px-6">
+      <div className="text-center mb-12">
+        <h1 className="text-5xl font-bold bg-gradient-to-r from-indigo-400 via-indigo-600 to-indigo-800 bg-clip-text text-transparent drop-shadow-md animate-pulse">
+          Climate Dashboard
+        </h1>
+        <p className="text-gray-500 dark:text-gray-300 text-lg max-w-lg mx-auto mt-4">
+          Real-time climate data at your fingertips. <br /> Explore trends,
+          monitor emissions, and track environmental changes.
+        </p>
+      </div>
+
+      <div className="grid gap-8 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 max-w-[1200px] w-full">
         {features.map((feature) => (
-          <Card key={feature.name} className="flex flex-col border shadow-lg">
-            <CardHeader>
-              <feature.icon className="h-8 w-8 text-primary mb-2" />
-              <CardTitle>{feature.name}</CardTitle>
+          <Card
+            key={feature.name}
+            className="relative flex flex-col border border-gray-300 dark:border-gray-700 shadow-lg 
+                      bg-white/90 dark:bg-gray-800/90 rounded-xl overflow-hidden transition-all 
+                      duration-300 group hover:scale-[1.07] hover:shadow-indigo-500/50"
+          >
+            <div className="absolute inset-0 border-2 border-transparent group-hover:border-indigo-500 transition-all duration-300 rounded-xl pointer-events-none"></div>
+
+            <CardHeader className="flex items-center space-x-4 p-6">
+              <div className="p-3 rounded-lg bg-indigo-500/20 dark:bg-indigo-400/20 transition-all group-hover:scale-125">
+                <feature.icon className="h-12 w-12 text-indigo-600 dark:text-indigo-300" />
+              </div>
+              <CardTitle className="text-xl text-gray-800 dark:text-white">
+                {feature.name}
+              </CardTitle>
             </CardHeader>
-            <CardContent>
-              <p className="text-sm text-muted-foreground pl-6 pb-4">
+
+            <CardContent className="px-6 pb-4">
+              <p className="text-md text-gray-600 dark:text-gray-300 leading-relaxed">
                 {feature.description}
               </p>
             </CardContent>
-            <CardFooter className="mt-auto">
-              <Button asChild className="w-full">
+
+            <CardFooter className="mt-auto p-6 relative z-10">
+              <Button
+                asChild
+                className="w-full bg-gradient-to-r from-indigo-500 to-indigo-700 text-white 
+                          shadow-lg hover:shadow-indigo-500/50 hover:-translate-y-1 transition-all 
+                          duration-300 rounded-xl py-3 text-lg font-semibold"
+              >
                 <Link to={feature.href}>View Chart</Link>
               </Button>
             </CardFooter>
