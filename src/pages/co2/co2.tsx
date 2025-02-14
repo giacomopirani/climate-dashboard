@@ -108,9 +108,9 @@ const CO2 = () => {
 
       {showCalendar && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-          <div className="bg-white w-full max-w-md max-h-[80vh] md:rounded-lg overflow-y-auto">
+          <div className="bg-white w-full max-w-md max-h-[80vh] md:rounded-lg overflow-y-auto dark:bg-cyan-950">
             <header className="flex justify-between items-center px-4 py-3 border-b">
-              <h2 className="text-xl font-bold text-black">
+              <h2 className="text-xl font-bold text-black dark:text-white">
                 Select Date Range
               </h2>
               <button
