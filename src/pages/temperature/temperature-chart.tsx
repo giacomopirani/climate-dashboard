@@ -1,5 +1,5 @@
 import { TemperatureData } from "@/util/types/temperature-types";
-import { useEffect, useState } from "react";
+import React from "react";
 import {
   Brush,
   CartesianGrid,
@@ -19,15 +19,6 @@ interface TemperatureChartProps {
 }
 
 const TemperatureChart: React.FC<TemperatureChartProps> = ({ data }) => {
-  const [chartKey, setChartKey] = useState(0);
-
-  useEffect(() => {
-    const isMobile = window.innerWidth < 768;
-    if (isMobile) {
-      setTimeout(() => setChartKey((prev) => prev + 1), 200);
-    }
-  }, []);
-
   const stationValues = data.map((d) => d.station);
   const landValues = data.map((d) => d.land);
   const overallMin = Math.min(...stationValues, ...landValues);
@@ -36,8 +27,8 @@ const TemperatureChart: React.FC<TemperatureChartProps> = ({ data }) => {
 
   return (
     <div className="w-full flex justify-center items-center">
-      <div className="w-full max-w-4xl h-[400px] sm:h-[450px] md:h-[500px] lg:h-[600px]">
-        <ResponsiveContainer key={chartKey} width="100%" height="100%">
+      <div className="w-full max-w-4xl h-[400px] sm:h-[450px] md:h-[400px] lg:h-[400px]">
+        <ResponsiveContainer width="100%" height="100%">
           <LineChart
             data={data}
             margin={{ top: 20, right: 20, left: 0, bottom: 30 }}

@@ -4,8 +4,9 @@ const Footer = () => {
   return (
     <footer className="text-foreground text-center py-4 mb-8">
       <p className="mb-2">
-        &copy; 2025 Climate Dashboard. <br /> Developed by{" "}
-        <strong>Giacomo Pirani</strong> as a final project for{" "}
+        &copy; 2025 <span className="text-indigo-700">Climate Dashboard</span>.{" "}
+        <br /> Developed by <strong>Giacomo Pirani</strong> as a final project
+        for{" "}
         <a
           href="https://www.start2impact.it/master/"
           target="_blank"
@@ -20,9 +21,9 @@ const Footer = () => {
           href="https://github.com/giacomopirani"
           target="_blank"
           rel="noopener noreferrer"
-          className="text-foreground hover:text-primary transition-colors"
+          className="text-foreground hover:text-primary transition-colors "
         >
-          <Github size={24} />
+          <Github size={24} className="hover:text-indigo-700" />
           <span className="sr-only">GitHub</span>
         </a>
         <a
@@ -31,7 +32,7 @@ const Footer = () => {
           rel="noopener noreferrer"
           className="text-foreground hover:text-primary transition-colors"
         >
-          <Linkedin size={24} />
+          <Linkedin size={24} className="hover:text-indigo-700" />
           <span className="sr-only">LinkedIn</span>
         </a>
       </div>
