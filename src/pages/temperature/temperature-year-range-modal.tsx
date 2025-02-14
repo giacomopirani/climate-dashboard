@@ -21,9 +21,11 @@ export function TemperatureYearRangeModal({
 }: TemperatureYearRangeModalProps) {
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-      <div className="bg-white w-full max-w-md md:rounded-lg p-4">
+      <div className="bg-white w-full max-w-md md:rounded-lg p-4 dark:bg-cyan-950">
         <header className="flex justify-between items-center border-b pb-2 mb-4">
-          <h2 className="text-xl font-bold text-black">Select Start Year</h2>
+          <h2 className="text-xl font-bold text-black dark:text-white">
+            Select Start Year
+          </h2>
           <button
             onClick={() => setYearRange(defaultRange)}
             className="text-red-500 hover:text-red-700"
@@ -32,7 +34,7 @@ export function TemperatureYearRangeModal({
           </button>
         </header>
         <div>
-          <label className="block mb-1 font-semibold text-black">
+          <label className="block mb-1 font-semibold text-black dark:text-white">
             Start Year
           </label>
           <DatePicker
@@ -57,7 +59,7 @@ export function TemperatureYearRangeModal({
         </div>
         {startYear && endYear && (
           <div className="mt-4">
-            <p className="font-semibold text-black">
+            <p className="font-semibold text-black dark:text-white">
               Range: {startYear.getFullYear()} - {endYear.getFullYear()}
             </p>
           </div>
