@@ -31,9 +31,9 @@ export default function Layout({ children }: LayoutProps) {
               alt="Logo App"
               className="h-14 hidden dark:block"
             />
-            <span className="font-extralight text-white dark:text-slate-950">
+            <span className="font-extralight text-xl text-white dark:text-slate-950">
               {" "}
-              Global Warming Dashboard
+              Global Warming
             </span>
           </Link>
           <div className="flex-grow" />

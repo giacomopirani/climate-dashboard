@@ -58,7 +58,7 @@ export default function Home() {
         </p>
       </div>
 
-      <div className="grid gap-8 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 max-w-[1200px] w-full">
+      <div className="grid gap-8 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols- max-w-[1200px] w-full">
         {features.map((feature) => (
           <Card
             key={feature.name}
