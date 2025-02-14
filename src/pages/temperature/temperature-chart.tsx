@@ -22,14 +22,11 @@ const TemperatureChart: React.FC<TemperatureChartProps> = ({ data }) => {
   const [chartKey, setChartKey] = useState(0);
 
   useEffect(() => {
-    // Forza il ridisegno quando il componente è montato su mobile
     const isMobile = window.innerWidth < 768;
     if (isMobile) {
       setTimeout(() => setChartKey((prev) => prev + 1), 200);
     }
   }, []);
-
-  console.log("Temperature Data:", data);
 
   const stationValues = data.map((d) => d.station);
   const landValues = data.map((d) => d.land);
