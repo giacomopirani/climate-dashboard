@@ -47,12 +47,12 @@ export default function Home() {
     <div className="flex flex-col items-center mt-10 px-6">
       <div className="text-center mb-12">
         <h1
-          className="text-5xl font-bold bg-gradient-to-r from-indigo-400 via-indigo-600 to-indigo-800 
+          className="text-5xl text-left font-bold bg-gradient-to-r from-indigo-400 via-indigo-600 to-indigo-800 
                 bg-clip-text text-transparent animate-brightness-pulse"
         >
           Climate Dashboard
         </h1>
-        <p className="text-gray-500 dark:text-gray-300 text-lg max-w-lg mx-auto mt-4">
+        <p className="text-gray-500 text-left dark:text-gray-300 text-lg max-w-lg mx-auto mt-4">
           Real-time climate data at your fingertips. <br /> Explore trends,
           monitor emissions, and track environmental changes.
         </p>
