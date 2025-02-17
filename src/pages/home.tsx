@@ -45,7 +45,6 @@ const features = [
 export default function Home() {
   return (
     <div className="relative bg-transparent">
-      {/* Video Background Fisso */}
       <div className="fixed inset-0 -z-10">
         <video
           autoPlay
@@ -55,22 +54,21 @@ export default function Home() {
           className="w-full h-full object-cover"
         >
           <source src="/earth-rotate.mp4" type="video/mp4" />
-          Il tuo browser non supporta il tag video.
+          Your browser does not support video tags.
         </video>
       </div>
 
-      {/* Contenuto Principale */}
       <div className="flex flex-col items-center mt-10 px-6">
-        <div className="mb-12 px-4">
-          <h1 className="text-5xl sm:text-6xl font-bold bg-gradient-to-r from-indigo-500 via-indigo-700 to-indigo-900 bg-clip-text text-transparent drop-shadow-lg animate-pulse">
+        <div className="mb-12 px-4 backdrop-blur-[1px]">
+          <h1 className="text-5xl sm:text-6xl font-bold tracking-tight text-indigo-500 text-shadow-strong">
             Climate Dashboard
           </h1>
-          <p className="text-white text-shadow text-lg max-w-xl mx-auto mt-4">
+          <p className="text-white text-shadow-strong tracking-tight text-lg max-w-xl mx-auto mt-4">
             Real-time data to protect our planet. <br />
             Monitoring today to save tomorrow: live climate, the earth to
             protect.
           </p>
-          <p className="mt-2 text-sm text-gray-200 text-shadow">
+          <p className="mt-2 text-sm tracking-tight text-gray-200 text-shadow-strong">
             Data provided by{" "}
             <a
               href="https://global-warming.org/"
