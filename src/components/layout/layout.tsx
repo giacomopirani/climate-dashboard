@@ -1,6 +1,6 @@
 import { LayoutDashboardIcon } from "lucide-react";
 import type { ReactNode } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import logoGlobeDark from "../../assets/globe-track-darkblue.png";
 import logoGlobeLight from "../../assets/globe-track-light.png";
 import Sidebar from "../layout/sidebar";
@@ -13,8 +13,16 @@ interface LayoutProps {
 }
 
 export default function Layout({ children }: LayoutProps) {
+  const location = useLocation();
+  // Se la path è "/" (Home), imposta il background su trasparente.
+  const isHome = location.pathname === "/";
+
   return (
-    <div className="flex min-h-screen bg-background">
+    <div
+      className={`flex min-h-screen ${
+        isHome ? "bg-transparent" : "bg-background"
+      }`}
+    >
       <div className="hidden lg:block">
         <Sidebar />
       </div>
@@ -32,7 +40,6 @@ export default function Layout({ children }: LayoutProps) {
               className="h-14 hidden dark:block"
             />
             <span className="font-extralight text-xl text-white dark:text-slate-950">
-              {" "}
               Global Warming
             </span>
           </Link>
