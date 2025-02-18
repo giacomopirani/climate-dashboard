@@ -71,7 +71,7 @@ export default function Home() {
         </video>
       </div>
 
-      <div className="flex flex-col items-center mt-10 px-6">
+      <div className="flex flex-col items-center px-6">
         <div className="mb-12 px-4 backdrop-blur-[1px]">
           <h1 className="text-3xl sm:text-3xl font-bold tracking-tight text-indigo-500 text-shadow-strong mt-8">
             Climate Dashboard
