@@ -48,7 +48,6 @@ export default function Home() {
 
   return (
     <div className="relative bg-transparent min-h-screen">
-      {/* Loader: mostra uno spinner e un messaggio fino al caricamento del video */}
       {!isLoaded && (
         <div className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-current">
           <div className="w-16 h-16 border-4 border-teal-500 border-t-transparent rounded-full animate-spin"></div>
@@ -58,7 +57,6 @@ export default function Home() {
         </div>
       )}
 
-      {/* Video Background */}
       <div className="fixed inset-0 -z-10 mt-10">
         <video
           autoPlay
@@ -73,7 +71,6 @@ export default function Home() {
         </video>
       </div>
 
-      {/* Contenuto Principale */}
       <div className="flex flex-col items-center mt-10 px-6">
         <div className="mb-12 px-4 backdrop-blur-[1px]">
           <h1 className="text-3xl sm:text-3xl font-bold tracking-tight text-indigo-500 text-shadow-strong mt-8">
