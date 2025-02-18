@@ -134,6 +134,10 @@ html {
   }
 }
 
+ul {
+  margin-bottom: 13px !important;
+}
+
 .animate-brightness-pulse {
   animation: brightnessPulse 3s infinite ease-in-out;
 }
