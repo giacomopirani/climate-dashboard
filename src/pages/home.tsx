@@ -1,4 +1,5 @@
 import { Atom, CloudRain, Snowflake, Thermometer, Wind } from "lucide-react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "../components/ui/button";
 import {
@@ -43,14 +44,28 @@ const features = [
 ];
 
 export default function Home() {
+  const [isLoaded, setIsLoaded] = useState(false);
+
   return (
-    <div className="relative bg-transparent">
+    <div className="relative bg-transparent min-h-screen">
+      {/* Loader: mostra uno spinner e un messaggio fino al caricamento del video */}
+      {!isLoaded && (
+        <div className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-current">
+          <div className="w-16 h-16 border-4 border-teal-500 border-t-transparent rounded-full animate-spin"></div>
+          <p className="mt-4 text-white text-xl font-bold tracking-wide">
+            Loading...
+          </p>
+        </div>
+      )}
+
+      {/* Video Background */}
       <div className="fixed inset-0 -z-10 mt-10">
         <video
           autoPlay
           loop
           muted
           playsInline
+          onLoadedData={() => setIsLoaded(true)}
           className="w-full h-full object-cover"
         >
           <source src="/earth-rotate.mp4" type="video/mp4" />
@@ -58,6 +73,7 @@ export default function Home() {
         </video>
       </div>
 
+      {/* Contenuto Principale */}
       <div className="flex flex-col items-center mt-10 px-6">
         <div className="mb-12 px-4 backdrop-blur-[1px]">
           <h1 className="text-3xl sm:text-3xl font-bold tracking-tight text-indigo-500 text-shadow-strong mt-8">
@@ -81,7 +97,7 @@ export default function Home() {
           </p>
         </div>
 
-        <div className="grid gap-8 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols- max-w-[1200px] w-full">
+        <div className="grid gap-8 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 max-w-[1200px] w-full">
           {features.map((feature) => (
             <Card
               key={feature.name}
