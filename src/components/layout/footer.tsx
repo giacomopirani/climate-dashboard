@@ -3,7 +3,7 @@ import { Github, Linkedin } from "lucide-react";
 const Footer = () => {
   return (
     <footer className=" text-center py-4 mb-8">
-      <p className="mb-2 text-white">
+      <p className="mb-2 text-green-300">
         &copy; 2025 <span className="text-indigo-700">Climate Dashboard</span>.{" "}
         <br /> Developed by <strong>Giacomo Pirani</strong> as a final project
         for{" "}
@@ -21,7 +21,7 @@ const Footer = () => {
           href="https://github.com/giacomopirani"
           target="_blank"
           rel="noopener noreferrer"
-          className="text-white hover:text-primary transition-colors "
+          className="text-green-300 hover:text-primary transition-colors "
         >
           <Github size={24} className="hover:text-indigo-700" />
           <span className="sr-only">GitHub</span>
@@ -30,7 +30,7 @@ const Footer = () => {
           href="https://www.linkedin.com/in/giacomo-pirani-914404276/"
           target="_blank"
           rel="noopener noreferrer"
-          className="text-white hover:text-primary transition-colors"
+          className="text-green-300 hover:text-primary transition-colors"
         >
           <Linkedin size={24} className=" hover:text-indigo-700" />
           <span className="sr-only">LinkedIn</span>
